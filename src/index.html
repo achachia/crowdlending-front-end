@@ -37,7 +37,14 @@
     <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
     <script src="https://cdn.onesignal.com/sdks/OneSignalSDK.js" async='async'></script>
-    
+    <script>
+      window.OneSignal = window.OneSignal || [];
+      OneSignal.push(function() {
+        OneSignal.init({
+          appId: "7fa46d8b-d9a1-4c84-b5f5-1747ccfc5168",
+        });
+      });
+    </script>
 </head>
 
 
