@@ -1,15 +1,17 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent implements OnInit {
+export class AppComponent implements OnInit{
   title = 'crowdlending-front-end';
 
+  
   ngOnInit() {
-    const OneSignal = window.OneSignal || [];
+    // tslint:disable-next-line:no-string-literal
+    const OneSignal = window['OneSignal'] || [];
     console.log('Init OneSignal');
     OneSignal.push(['init', {
       appId: '7fa46d8b-d9a1-4c84-b5f5-1747ccfc5168',
