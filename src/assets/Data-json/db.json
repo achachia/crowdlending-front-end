@@ -1,0 +1,38 @@
+{
+  "investor": [
+    {
+      "id": 1,
+      "login": "invest1@yopmail.com",
+      "password": "toto1"
+    },
+    {
+      "id": 2,
+      "login": "invest2@yopmail.com",
+      "password": "toto2"
+    }   
+  ],
+ "company_owner": [
+  {
+    "id": 1,
+    "login": "owner1@yopmail.com",
+    "password": "toto1"
+  },
+  {
+    "id": 2,
+    "login": "owner2@yopmail.com",
+    "password": "toto2"
+  }   
+ ],
+  "administrator": [
+    {
+      "id": 1,
+      "login": "admin1@yopmail.com",
+      "password": "toto1"
+    },
+    {
+      "id": 2,
+      "login": "admin2@yopmail.com",
+      "password": "toto2"
+    }   
+  ]
+}

@@ -9,7 +9,9 @@ import { catchError, retry } from 'rxjs/operators';
 })
 export class apiHttpJsonService {
 
-  private apiURL = 'http://localhost:3000';
+  private apiUrlLocal = 'http://localhost:3000';
+
+  private apiUrlCloud = 'https://json-server-growdlending.herokuapp.com';
 
   constructor(private http: HttpClient) { }
 
@@ -20,19 +22,19 @@ export class apiHttpJsonService {
 
     if(objectConnection.typeCompteLogin === '1'){
 
-        url = this.apiURL + '/administrator?login=' + objectConnection.emailLogin + '&password=' + objectConnection.passwordLogin;
+        url = this.apiUrlCloud + '/administrator?login=' + objectConnection.emailLogin + '&password=' + objectConnection.passwordLogin;
 
     }
 
     if(objectConnection.typeCompteLogin === '2'){
 
-        url = this.apiURL + '/company_owner?login=' + objectConnection.emailLogin + '&password=' + objectConnection.passwordLogin;
+        url = this.apiUrlCloud + '/company_owner?login=' + objectConnection.emailLogin + '&password=' + objectConnection.passwordLogin;
 
     }
 
     if(objectConnection.typeCompteLogin === '3'){
 
-        url = this.apiURL + '/investor?login=' + objectConnection.emailLogin + '&password=' + objectConnection.passwordLogin;
+        url = this.apiUrlCloud + '/investor?login=' + objectConnection.emailLogin + '&password=' + objectConnection.passwordLogin;
 
     }
 

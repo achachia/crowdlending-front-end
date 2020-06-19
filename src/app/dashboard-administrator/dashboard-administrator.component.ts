@@ -9,7 +9,11 @@ export class DashboardAdministratorComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit(): void {
+  ngOnInit(): void { }
+
+  Logout(event){
+
+    alert("logout");
   }
 
 }
