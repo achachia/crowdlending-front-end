@@ -25,3 +25,13 @@ Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protrac
 ## Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+
+            /******************************* commit : 1.0.0.6****************************************************/
+
+Implementation des fonctionnalites suivantes :
+
+1. composant identification  pour les 3 composants admin-investor-company_owner  (update)
+
+2. creation 2 composant dashboard-company-owner  && dashboard-investor  (create)
+
+3. ajout les 2 routes qui correspond aux 2 composants dashboard-company-owner  && dashboard-investor

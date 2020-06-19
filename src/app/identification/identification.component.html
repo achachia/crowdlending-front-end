@@ -1,41 +1,100 @@
 <div class="container login-container">
             <div class="row">
+
+           
                 <div class="col-md-6 login-form-1">
-                    <h3>Login Form 1</h3>
+                    <h3>Identification</h3>
+
+                    <div class="alert alert-danger"  *ngIf="isErreurLogin">
+                        <strong>Erreur!</strong>  identification
+                     </div>
+
+                    <form   class="form-horizontal" #loginForm = "ngForm"  (ngSubmit)="onFormSubmitLogin()">
                     
                         <div class="form-group">
-                            <input type="text" class="form-control" placeholder="Your Email *" value="" />
+                            <input type="text" class="form-control" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" placeholder="Your Email *" [(ngModel)] = "ObjetLogin.emailLogin"  name="emailLogin" required value="" />
                         </div>
                         <div class="form-group">
-                            <input type="password" class="form-control" placeholder="Your Password *" value="" />
+                            <input type="password" class="form-control" placeholder="Your Password *"  [(ngModel)] = "ObjetLogin.passwordLogin"   name="passwordLogin"   required value="" />
+                        </div>
+                        <div class="control-group form-group">
+
+                            <div class="controls">
+                             
+                              <select class="form-control"  [(ngModel)] = "ObjetLogin.typeCompteLogin" name="typeCompteLogin">
+                  
+                                      <option  value="">Selectionner type compte</option>               
+                  
+                                      <option  value="1" >adminstrateur</option>  
+                                      
+                                      <option  value="2" >Porteur de projet</option> 
+                  
+                                      <option  value="3" >Investiteur</option> 
+                              </select> 
+
+                            </div>
+                          </div>
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-primary" [disabled]="!loginForm.form.valid">Login</button>
                         </div>
                         <div class="form-group">
-                            <input type="submit" class="btnSubmit" value="Login" />
+                            <a href="#" class="btnForgetPwd">Forget Password?</a> 
                         </div>
-                        <div class="form-group">
-                            <a href="#" class="btnForgetPwd">Forget Password?</a>
-                        </div>
+
+                    </form>   
                     
                 </div>
+
+             
+           
+         
                 <div class="col-md-6 login-form-2">
                     <div class="login-logo">
                         <img src="https://image.ibb.co/n7oTvU/logo_white.png" alt=""/>
                     </div>
-                    <h3>Login Form 2</h3>
-                        <div class="form-group">
-                            <input type="text" class="form-control" placeholder="Your Email *" value="" />
-                        </div>
-                        <div class="form-group">
-                            <input type="password" class="form-control" placeholder="Your Password *" value="" />
-                        </div>
-                        <div class="form-group">
-                            <input type="submit" class="btnSubmit" value="Login" />
-                        </div>
-                        <div class="form-group">
+                    <h3>Inscription</h3>
 
-                            <a href="#" class="btnForgetPwd" value="Login">Forget Password?</a>
+                    <form   class="form-horizontal" #inscriptionForm = "ngForm"  (ngSubmit)="onFormSubmitInscription()">
+
+                    <div class="form-group">
+                        <input type="text" class="form-control" [(ngModel)] = "ObjetInscription.nomInscription" name = "nomInscription" placeholder="votre nom *" required value="" />
+                    </div>
+        
+                    <div class="form-group">
+                        <input type="text" class="form-control" [(ngModel)] = "ObjetInscription.prenomInscription" name = "prenomInscription" placeholder="votre prenom *" required value="" />
+                    </div>
+        
+                    <div class="form-group">
+                        <input type="text" class="form-control" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" [(ngModel)] = "ObjetInscription.emailInscription" name = "emailInscription" placeholder="Your Email *" required value="" />
+                    </div>
+                    <div class="form-group">
+                        <input type="password" class="form-control" [(ngModel)] = "ObjetInscription.passwordInscription" name = "passwordInscription" placeholder="Your Password *" required value="" />
+                    </div>
+                    <div class="control-group form-group">
+
+                        <div class="controls">
+                         
+                          <select class="form-control"  [(ngModel)] = "ObjetInscription.typeCompteInscription" name="typeCompteInscription">
+              
+                                  <option  value="">Selectionner type compte</option>                                
+                                  
+                                  <option  value="2" >Porteur de projet</option> 
+              
+                                  <option  value="3" >Investiteur</option> 
+                          </select> 
                         </div>
-                   
+                      </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary" [disabled]="!inscriptionForm.form.valid">Inscription</button>
+                    </div>
+                </form>  
                 </div>
-            </div>
+
+           
+
+        </div>
 </div>
+
+
+
+
