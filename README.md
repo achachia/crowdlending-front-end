@@ -1,10 +1,12 @@
-            /******************************* commit : 1.0.0.9****************************************************/
+            /******************************* commit : 1.0.0.10****************************************************/
 
 Implementation des fonctionnalites suivantes :
 
 1. creation composant profilUser  
 
 2. ajout module import { CookieService } from 'ngx-cookie-service';   (npm install)
+
+3. ajout .travis.yml
 
 
 

@@ -7,7 +7,7 @@ import { CookieService } from 'ngx-cookie-service';
   templateUrl: './dashboard-investor.component.html',
   styleUrls: ['./dashboard-investor.component.css']
 })
-export class DashboardInvestorComponent implements OnInit {
+export class DashboardInvestorComponent implements OnInit {  
 
   public infosUser = {
                    id : '',
