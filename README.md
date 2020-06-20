@@ -1,3 +1,16 @@
+            /******************************* commit : 1.0.0.7****************************************************/
+
+Implementation des fonctionnalites suivantes :
+
+1. composant identification  pour les 3 composants admin-investor-company_owner  (update) (ajout-fonction deconnection)
+
+2. installation module angular/material commande = $ ng add @angular/material
+
+
+
+
+             /***********************************************************************************************/
+
 # CrowdlendingFrontEnd
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 9.1.8.
@@ -26,12 +39,5 @@ Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protrac
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
 
-            /******************************* commit : 1.0.0.6****************************************************/
 
-Implementation des fonctionnalites suivantes :
 
-1. composant identification  pour les 3 composants admin-investor-company_owner  (update)
-
-2. creation 2 composant dashboard-company-owner  && dashboard-investor  (create)
-
-3. ajout les 2 routes qui correspond aux 2 composants dashboard-company-owner  && dashboard-investor
