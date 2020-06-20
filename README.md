@@ -1,10 +1,10 @@
-            /******************************* commit : 1.0.0.7****************************************************/
+            /******************************* commit : 1.0.0.7.1****************************************************/
 
 Implementation des fonctionnalites suivantes :
 
 1. composant identification  pour les 3 composants admin-investor-company_owner  (update) (ajout-fonction deconnection)
 
-2. installation module angular/material commande = $ ng add @angular/material
+
 
 
 

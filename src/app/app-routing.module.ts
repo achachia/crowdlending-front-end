@@ -14,7 +14,7 @@ const routes: Routes = [
   { path: 'DashboardAdministrator', component: DashboardAdministratorComponent},
   { path: 'DashboardInvestor', component: DashboardInvestorComponent},
   { path: 'DashboardCompanyOwner', component: DashboardCompanyOwnerComponent},
-  { path: 'Identification', component: IdentificationComponent}
+  { path: 'Identification', component: IdentificationComponent}, 
 ];
  
 @NgModule({

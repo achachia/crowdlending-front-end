@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import {Router} from '@angular/router';
+import { Component, OnInit} from '@angular/core';
+import {ActivatedRoute, Router} from '@angular/router';
 import {apiHttpJsonService} from './../api.json.http.service';
+
 
 
 @Component({
@@ -32,9 +33,18 @@ export class IdentificationComponent implements OnInit {
 
   public isvalidInscription = false;
 
-  constructor(private router: Router, private apiService: apiHttpJsonService) {}
+  constructor(private route: ActivatedRoute, private router: Router, private apiService: apiHttpJsonService) { 
 
-  ngOnInit(): void { }
+
+   /* this.route.params.subscribe(params => {
+
+      alert(params['action']);
+
+    }) */
+
+  }
+
+  ngOnInit(): void {  }
 
   public onFormSubmitLogin() {
 
@@ -77,10 +87,6 @@ export class IdentificationComponent implements OnInit {
 
     });
 
-
-
-
-
   }
 
   public onFormSubmitInscription(){
@@ -89,5 +95,7 @@ export class IdentificationComponent implements OnInit {
 
 
   }
+
+ 
 
 }

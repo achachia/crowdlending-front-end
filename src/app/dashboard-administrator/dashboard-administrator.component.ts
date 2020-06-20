@@ -11,10 +11,6 @@ export class DashboardAdministratorComponent implements OnInit {
   constructor(private router: Router) { }
 
   ngOnInit(): void { }
-
-  Logout(event){
-
-    this.router.navigate(['/Identification']);
-  }
+ 
 
 }
