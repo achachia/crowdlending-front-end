@@ -1,10 +1,23 @@
+dist: trusty
+sudo: false
+
 language: node_js
 node_js:
-  - "9"
-dist: trusty
-sudo: requiredbranches:
-  only:
-  - masterbefore_script:
-  - npm install -g @angular/cliscript:
-- ng lint
-- ng build --prod --base-href https://github.com/achachia/crowdlending-front-end.git
+  - '8'
+
+addons:
+  apt:
+    sources:
+      - google-chrome
+    packages:
+      - google-chrome-stable
+
+cache:
+  directories:
+    - ./node_modules
+
+install:
+  - npm install
+
+script:
+  - npm run test -- --watch=false --no-progress --browsers=ChromeHeadlessNoSandbox
