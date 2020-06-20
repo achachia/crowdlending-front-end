@@ -2,6 +2,7 @@ import { DashboardAdministratorComponent } from './dashboard-administrator/dashb
 import { DashboardInvestorComponent } from './dashboard-investor/dashboard-investor.component';
 import { DashboardCompanyOwnerComponent } from './dashboard-company-owner/dashboard-company-owner.component';
 import { IdentificationComponent } from './identification/identification.component';
+import { ProfilUserComponent } from './profil-user/profil-user.component';
 import { AccueilComponent } from './accueil/accueil.component';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -14,7 +15,8 @@ const routes: Routes = [
   { path: 'DashboardAdministrator', component: DashboardAdministratorComponent},
   { path: 'DashboardInvestor', component: DashboardInvestorComponent},
   { path: 'DashboardCompanyOwner', component: DashboardCompanyOwnerComponent},
-  { path: 'Identification', component: IdentificationComponent}, 
+  { path: 'Identification', component: IdentificationComponent},
+  { path: 'profilUser', component: ProfilUserComponent}
 ];
  
 @NgModule({

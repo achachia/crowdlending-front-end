@@ -1,6 +1,7 @@
 import { Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {apiHttpJsonService} from './../api.json.http.service';
+import { CookieService } from 'ngx-cookie-service';
 
 
 
@@ -26,6 +27,15 @@ export class IdentificationComponent implements OnInit {
                        typeCompteInscription : ''
     };
 
+    public infosUser = {
+                        id : '',
+                        nom: '',
+                        prenom : '',
+                        login : '',
+                        password : '',
+                        typeCompte : ''
+   };
+
   public isErreurLogin = false;
 
   public isErreurInscription = false;
@@ -34,7 +44,7 @@ export class IdentificationComponent implements OnInit {
 
   public isvalidInscription = false;
 
-  constructor(private route: ActivatedRoute, private router: Router, private apiService: apiHttpJsonService) { 
+  constructor(private route: ActivatedRoute, private router: Router, private apiService: apiHttpJsonService, private cookie: CookieService) {
 
 
    /* this.route.params.subscribe(params => {
@@ -52,13 +62,30 @@ export class IdentificationComponent implements OnInit {
 
     this.apiService.identificationUser(this.ObjetLogin).subscribe((data: any) => {
 
-        console.log(data);
+        console.log(data[0].id);
 
         if (data.length === 0){
 
                this.isErreurLogin = true;
 
         }else{
+
+
+          this.infosUser.id =  data[0].id;
+
+          this.infosUser.nom =  data[0].nom;
+
+          this.infosUser.prenom =  data[0].prenom;
+
+          this.infosUser.login =  data[0].login;
+
+          this.infosUser.password =  data[0].password;
+
+          this.infosUser.typeCompte =  this.ObjetLogin.typeCompteLogin;
+
+          
+
+          this.cookie.set('infosUser', JSON.stringify(this.infosUser));
 
           if (this.ObjetLogin.typeCompteLogin === '1'){
 
@@ -90,10 +117,10 @@ export class IdentificationComponent implements OnInit {
 
   }
 
-  
+
 
   public onFormSubmitInscription(){
-   
+
 
     this.apiService.inscriptionUser(this.ObjetInscription).subscribe((data: any) => {
 
@@ -104,6 +131,20 @@ export class IdentificationComponent implements OnInit {
              this.isErreurInscription = true;
 
       }else{
+
+        this.infosUser.id =  data[0].id;
+
+        this.infosUser.nom =  data[0].nom;
+
+        this.infosUser.prenom =  data[0].prenom;
+
+        this.infosUser.login =  data[0].login;
+
+        this.infosUser.password =  data[0].password;
+
+        this.infosUser.typeCompte =  this.ObjetInscription.typeCompteInscription;
+
+        this.cookie.set('infosUser', JSON.stringify(this.infosUser));
 
         if (this.ObjetInscription.typeCompteInscription === '1'){
 
@@ -136,6 +177,6 @@ export class IdentificationComponent implements OnInit {
 
   }
 
- 
+
 
 }

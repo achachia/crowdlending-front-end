@@ -2,7 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
-
+import { CookieService } from 'ngx-cookie-service';
 import { AppComponent } from './app.component';
 import { DashboardAdministratorComponent } from './dashboard-administrator/dashboard-administrator.component';
 import { IdentificationComponent } from './identification/identification.component';
@@ -11,6 +11,7 @@ import { AccueilComponent } from './accueil/accueil.component';
 import { apiHttpJsonService } from './api.json.http.service';
 import { DashboardInvestorComponent } from './dashboard-investor/dashboard-investor.component';
 import { DashboardCompanyOwnerComponent } from './dashboard-company-owner/dashboard-company-owner.component';
+import { ProfilUserComponent } from './profil-user/profil-user.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { DashboardCompanyOwnerComponent } from './dashboard-company-owner/dashbo
     IdentificationComponent,
     AccueilComponent,
     DashboardInvestorComponent,
-    DashboardCompanyOwnerComponent
+    DashboardCompanyOwnerComponent,
+    ProfilUserComponent
   ],
   imports: [
     BrowserModule,
@@ -27,7 +29,7 @@ import { DashboardCompanyOwnerComponent } from './dashboard-company-owner/dashbo
     FormsModule,
     HttpClientModule
   ],
-  providers: [apiHttpJsonService],
+  providers: [CookieService,apiHttpJsonService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

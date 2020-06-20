@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {Router} from '@angular/router';
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-dashboard-investor',
@@ -8,13 +9,22 @@ import {Router} from '@angular/router';
 })
 export class DashboardInvestorComponent implements OnInit {
 
-  constructor(private router: Router) { }
+  public infosUser = {
+                   id : '',
+                   nom: '',
+                   prenom : '',
+                   login : '',
+                   password : '',
+                   typeCompte : ''
+  };
+
+  constructor(private router: Router, private cookie: CookieService) {
+
+    this.infosUser = JSON.parse(this.cookie.get('infosUser'));
+   }
 
   ngOnInit(): void {  }
 
-  Logout(event){
-
-    this.router.navigate(['/Identification']);
-  }
+  
 
 }

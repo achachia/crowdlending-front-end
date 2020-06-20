@@ -1,8 +1,10 @@
-            /******************************* commit : 1.0.0.8****************************************************/
+            /******************************* commit : 1.0.0.9****************************************************/
 
 Implementation des fonctionnalites suivantes :
 
-1. composant identification/inscription  pour les 3 composants admin-investor-company_owner  (update) (ajout-fonction inscription)
+1. creation composant profilUser  
+
+2. ajout module import { CookieService } from 'ngx-cookie-service';   (npm install)
 
 
 
