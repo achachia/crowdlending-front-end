@@ -54,6 +54,10 @@
                     </div>
                     <h3>Inscription</h3>
 
+                    <div class="alert alert-danger"  *ngIf="isErreurInscription">
+                        <strong>Erreur!</strong>  inscription
+                     </div>
+
                     <form   class="form-horizontal" #inscriptionForm = "ngForm"  (ngSubmit)="onFormSubmitInscription()">
 
                     <div class="form-group">

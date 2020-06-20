@@ -16,29 +16,109 @@ export class apiHttpJsonService {
   constructor(private http: HttpClient) { }
 
 
+  public countItems(objectInscription){
+
+    let url = '';
+
+    if (objectInscription.typeCompteInscription === '1'){
+
+      url = this.apiUrlCloud + '/administrator';
+
+     }
+
+    if (objectInscription.typeCompteInscription === '2'){
+
+      url = this.apiUrlCloud + '/company_owner';
+
+     }
+
+    if (objectInscription.typeCompteInscription === '3'){
+
+         url = this.apiUrlCloud + '/investor';
+
+     }
+
+    return this.http.get(url);
+
+  }
+
+
    public identificationUser(objectConnection){
 
     let url = '';
 
-    if(objectConnection.typeCompteLogin === '1'){
+    if (objectConnection.typeCompteLogin === '1'){
 
         url = this.apiUrlCloud + '/administrator?login=' + objectConnection.emailLogin + '&password=' + objectConnection.passwordLogin;
 
     }
 
-    if(objectConnection.typeCompteLogin === '2'){
+    if (objectConnection.typeCompteLogin === '2'){
 
         url = this.apiUrlCloud + '/company_owner?login=' + objectConnection.emailLogin + '&password=' + objectConnection.passwordLogin;
 
     }
 
-    if(objectConnection.typeCompteLogin === '3'){
+    if (objectConnection.typeCompteLogin === '3'){
 
         url = this.apiUrlCloud + '/investor?login=' + objectConnection.emailLogin + '&password=' + objectConnection.passwordLogin;
 
     }
 
     return this.http.get(url);
+
+
+  }
+
+  public inscriptionUser(objectInscription){
+
+    let url = '';
+
+    let params = {};
+
+    if (objectInscription.typeCompteInscription === '1'){
+
+        url = this.apiUrlCloud + '/administrator';
+
+        params = {
+                 id : objectInscription.id,
+                 nom : objectInscription.nomInscription,
+                 prenom : objectInscription.prenomInscription,
+                 login : objectInscription.emailInscription,
+                 password : objectInscription.passwordInscription
+            };
+
+     }
+
+    if (objectInscription.typeCompteInscription === '2'){
+
+        url = this.apiUrlCloud + '/company_owner';
+
+        params = {
+                id : objectInscription.id,
+                nom : objectInscription.nomInscription,
+                prenom : objectInscription.prenomInscription,
+                login : objectInscription.emailInscription,
+                password : objectInscription.passwordInscription
+         };
+
+      }
+
+    if (objectInscription.typeCompteInscription === '3'){
+
+        url = this.apiUrlCloud + '/investor';
+
+        params = {
+                  id : objectInscription.id,
+                  nom : objectInscription.nomInscription,
+                  prenom : objectInscription.prenomInscription,
+                  login : objectInscription.emailInscription,
+                  password : objectInscription.passwordInscription
+         };
+
+       }
+
+    return this.http.post(url, params);
 
 
   }

@@ -18,6 +18,7 @@ export class IdentificationComponent implements OnInit {
    };
 
    public ObjetInscription = {
+                       id : '',
                        nomInscription : '',
                        prenomInscription : '',
                        emailInscription : '',
@@ -63,22 +64,22 @@ export class IdentificationComponent implements OnInit {
 
             this.router.navigate(['/DashboardAdministrator']);
 
-        }
+           }
 
           if (this.ObjetLogin.typeCompteLogin === '2'){
 
           this.router.navigate(['/DashboardCompanyOwner']);
 
-        }
+           }
 
           if (this.ObjetLogin.typeCompteLogin === '3'){
 
           this.router.navigate(['/DashboardInvestor']);
 
-        }
+          }
 
 
-        }
+      }
 
 
 
@@ -89,9 +90,48 @@ export class IdentificationComponent implements OnInit {
 
   }
 
-  public onFormSubmitInscription(){
+  
 
-    alert(this.ObjetInscription.nomInscription);
+  public onFormSubmitInscription(){
+   
+
+    this.apiService.inscriptionUser(this.ObjetInscription).subscribe((data: any) => {
+
+      console.log(data);
+
+      if (data.length === 0){
+
+             this.isErreurInscription = true;
+
+      }else{
+
+        if (this.ObjetInscription.typeCompteInscription === '1'){
+
+          this.router.navigate(['/DashboardAdministrator']);
+
+        }
+
+        if (this.ObjetInscription.typeCompteInscription === '2'){
+
+        this.router.navigate(['/DashboardCompanyOwner']);
+
+         }
+
+        if (this.ObjetInscription.typeCompteInscription === '3'){
+
+           this.router.navigate(['/DashboardInvestor']);
+
+         }
+
+
+      }
+
+
+
+
+  }, (error: any) => {
+
+  });
 
 
   }
