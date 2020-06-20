@@ -6,7 +6,7 @@ Implementation des fonctionnalites suivantes :
 
 2. ajout module import { CookieService } from 'ngx-cookie-service';   (npm install)
 
-3. ajout .travis.yml
+3. ajout .travis.yml et modification fichier karma.conf.js
 
 
 
