@@ -2,6 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
+import { RouterModule } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
 import { AppComponent } from './app.component';
 import { DashboardAdministratorComponent } from './dashboard-administrator/dashboard-administrator.component';
@@ -27,7 +28,8 @@ import { ProfilUserComponent } from './profil-user/profil-user.component';
     BrowserModule,
     RoutingModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    RouterModule
   ],
   providers: [CookieService,apiHttpJsonService],
   bootstrap: [AppComponent]
