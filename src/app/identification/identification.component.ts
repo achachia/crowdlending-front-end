@@ -132,15 +132,15 @@ export class IdentificationComponent implements OnInit {
 
       }else{
 
-        this.infosUser.id =  data[0].id;
+        this.infosUser.id =  data.id;
 
-        this.infosUser.nom =  data[0].nom;
+        this.infosUser.nom =  data.nom;
 
-        this.infosUser.prenom =  data[0].prenom;
+        this.infosUser.prenom =  data.prenom;
 
-        this.infosUser.login =  data[0].login;
+        this.infosUser.login =  data.login;
 
-        this.infosUser.password =  data[0].password;
+        this.infosUser.password =  data.password;
 
         this.infosUser.typeCompte =  this.ObjetInscription.typeCompteInscription;
 
