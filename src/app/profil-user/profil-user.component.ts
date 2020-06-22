@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { CookieService } from 'ngx-cookie-service';
 import {Router} from '@angular/router';
+import {apiHttpJsonService} from './../api.json.http.service';
+
 
 @Component({
   selector: 'app-profil-user',
@@ -31,7 +33,7 @@ export class ProfilUserComponent implements OnInit {
 
     public isvalidUpdateProfil = false;
 
-  constructor(private router: Router, private cookie: CookieService) {
+  constructor(private router: Router, private cookie: CookieService, private apiService: apiHttpJsonService) {
 
       this.infosUser = JSON.parse(this.cookie.get('infosUser'));
 
@@ -47,7 +49,26 @@ export class ProfilUserComponent implements OnInit {
   onFormSubmitUpdateProfil(){
 
 
+    this.apiService.updateProfilUser(this.ObjetUpdateProfil).subscribe((data: any) => {
 
+      console.log(data);
+
+      if (data.length === 0){
+
+             this.isErreurUpdatePofil = true;
+
+      }else{
+      
+
+
+      }
+
+
+
+
+     }, (error: any) => {
+
+    });
 
   }
 

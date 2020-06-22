@@ -11,7 +11,7 @@ export class apiHttpJsonService {
 
   private apiUrlLocal = 'http://localhost:3000';
 
-  private apiUrlCloud = 'https://json-server-growdlending.herokuapp.com';
+  private apiUrlCloud = 'http://localhost:3000';  // https://json-server-growdlending.herokuapp.com
 
   constructor(private http: HttpClient) { }
 
@@ -119,6 +119,59 @@ export class apiHttpJsonService {
        }
 
     return this.http.post(url, params);
+
+
+  }
+
+  public updateProfilUser(objectUpdate){
+
+    let url = '';
+
+    let params = {};
+
+    if (objectUpdate.typeCompte === '1'){
+
+        url = this.apiUrlCloud + '/administrator/' + objectUpdate.id;
+
+        params = {
+                 id : objectUpdate.id,
+                 nom : objectUpdate.nom,
+                 prenom : objectUpdate.prenom,
+                 login : objectUpdate.email,
+                 password : objectUpdate.password
+            };
+
+     }
+
+    if (objectUpdate.typeCompte === '2'){
+
+        url = this.apiUrlCloud + '/company_owner/' + objectUpdate.id;
+
+        params = {
+                id : objectUpdate.id,
+                nom : objectUpdate.nom,
+                prenom : objectUpdate.prenom,
+                login : objectUpdate.email,
+                password : objectUpdate.password
+         };
+
+      }
+
+    if (objectUpdate.typeCompte === '3'){
+
+        url = this.apiUrlCloud + '/investor/' + objectUpdate.id;
+
+        params = {
+                  id : objectUpdate.id,
+                  nom : objectUpdate.nom,
+                  prenom : objectUpdate.prenom,
+                  login : objectUpdate.email,
+                  password : objectUpdate.password
+         };
+
+       }
+
+    return this.http.put(url, params);
 
 
   }
