@@ -1,9 +1,9 @@
-import { Component, OnInit} from '@angular/core';
+import { Component, OnInit, ElementRef, ViewChild} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {apiHttpJsonService} from './../api.json.http.service';
 import { CookieService } from 'ngx-cookie-service';
 
-
+declare const window: any;
 
 @Component({
   selector: 'app-identification',
@@ -11,6 +11,10 @@ import { CookieService } from 'ngx-cookie-service';
   styleUrls: ['./identification.component.css']
 })
 export class IdentificationComponent implements OnInit {
+
+  @ViewChild('recaptcha', {static: true }) recaptchaElement: ElementRef;
+
+
 
   public ObjetLogin = {
                   emailLogin : '',
@@ -24,6 +28,8 @@ export class IdentificationComponent implements OnInit {
                        prenomInscription : '',
                        emailInscription : '',
                        passwordInscription : '',
+                       sex : '',
+                       photoUser : '',
                        typeCompteInscription : ''
     };
 
@@ -33,6 +39,8 @@ export class IdentificationComponent implements OnInit {
                         prenom : '',
                         login : '',
                         password : '',
+                        sex : '',
+                        photoUser : '',
                         typeCompte : ''
    };
 
@@ -43,6 +51,8 @@ export class IdentificationComponent implements OnInit {
   public isvalidLogin = false;
 
   public isvalidInscription = false;
+
+
 
   constructor(private route: ActivatedRoute, private router: Router, private apiService: apiHttpJsonService, private cookie: CookieService) {
 
@@ -55,7 +65,35 @@ export class IdentificationComponent implements OnInit {
 
   }
 
-  ngOnInit(): void {  }
+  ngOnInit(): void {
+
+    this.addRecaptchaScript();
+   }
+
+  addRecaptchaScript() {
+
+    window.grecaptchaCallback = () => {
+      this.renderReCaptcha();
+    };
+
+    (function(d, s, id, obj){
+      let js, fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) { obj.renderReCaptcha(); return; }
+      js = d.createElement(s); js.id = id;
+      js.src = 'https://www.google.com/recaptcha/api.js?onload=grecaptchaCallback&amp;render=explicit';
+      fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'recaptcha-jssdk', this));
+
+  }
+
+  renderReCaptcha() {
+    window.grecaptcha.render(this.recaptchaElement.nativeElement, {
+      sitekey : '6LcLIagZAAAAAA__BTnCWvIDOQg1oh_oDqtdt8vx',
+      callback: (response) => {
+          console.log(response);
+      }
+    });
+  }
 
   public onFormSubmitLogin() {
 
@@ -70,10 +108,9 @@ export class IdentificationComponent implements OnInit {
 
         }else{
 
-          if (data[0].length > 0){
+          if (data[0]  && data[0].length > 0){
 
             console.log('toto1');
-
 
             this.infosUser.id =  data.id;
 
@@ -85,9 +122,13 @@ export class IdentificationComponent implements OnInit {
 
             this.infosUser.password =  data.password;
 
-          }else{
-            console.log('toto2');
+            this.infosUser.photoUser =  data.photoUser;
 
+            this.infosUser.sex =  data.sex;
+
+          }else{
+
+            console.log('toto2');
 
             this.infosUser.id =  data[0].id;
 
@@ -98,6 +139,10 @@ export class IdentificationComponent implements OnInit {
             this.infosUser.login =  data[0].login;
 
             this.infosUser.password =  data[0].password;
+
+            this.infosUser.photoUser =  data[0].photoUser;
+
+            this.infosUser.sex =  data[0].sex;
 
 
           }
@@ -151,21 +196,9 @@ export class IdentificationComponent implements OnInit {
 
       }else{
 
-        if (data[0].length > 0){
+        if (data[0]  && data[0].length > 0){
 
-
-          this.infosUser.id =  data.id;
-
-          this.infosUser.nom =  data.nom;
-
-          this.infosUser.prenom =  data.prenom;
-
-          this.infosUser.login =  data.login;
-
-          this.infosUser.password =  data.password;
-
-
-        }else{
+          console.log('toto1');
 
           this.infosUser.id =  data[0].id;
 
@@ -177,7 +210,24 @@ export class IdentificationComponent implements OnInit {
 
           this.infosUser.password =  data[0].password;
 
+          this.infosUser.sex =  data[0].sex;
 
+
+        }else{
+
+          console.log('toto2');
+
+          this.infosUser.id =  data.id;
+
+          this.infosUser.nom =  data.nom;
+
+          this.infosUser.prenom =  data.prenom;
+
+          this.infosUser.login =  data.login;
+
+          this.infosUser.password =  data.password;
+
+          this.infosUser.sex =  data.sex;
         }
 
         this.infosUser.typeCompte =  this.ObjetInscription.typeCompteInscription;

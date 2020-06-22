@@ -67,6 +67,20 @@
                     <div class="form-group">
                         <input type="text" class="form-control" [(ngModel)] = "ObjetInscription.prenomInscription" name = "prenomInscription" placeholder="votre prenom *" required value="" />
                     </div>
+                    <div class="control-group form-group">
+
+                        <div class="controls">
+                         
+                          <select class="form-control"  [(ngModel)] = "ObjetInscription.sex" name="sexInscription">
+              
+                                  <option  value="">Selectionner votre sex</option>                                
+                                  
+                                  <option  value="H" >Homme</option> 
+              
+                                  <option  value="F" >Femme</option> 
+                          </select> 
+                        </div>
+                      </div>
         
                     <div class="form-group">
                         <input type="text" class="form-control" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" [(ngModel)] = "ObjetInscription.emailInscription" name = "emailInscription" placeholder="Your Email *" required value="" />
@@ -88,6 +102,13 @@
                           </select> 
                         </div>
                       </div>
+
+                      <div class="control-group form-group">
+
+                            <div #recaptcha ></div>
+                      </div>
+
+                     
                     <div class="form-group">
                         <button type="submit" class="btn btn-primary" [disabled]="!inscriptionForm.form.valid">Inscription</button>
                     </div>

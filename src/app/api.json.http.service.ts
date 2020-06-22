@@ -11,7 +11,7 @@ export class apiHttpJsonService {
 
   private apiUrlLocal = 'http://localhost:3000';
 
-  private apiUrlCloud = 'https://json-server-growdlending.herokuapp.com';  // https://json-server-growdlending.herokuapp.com
+  private apiUrlCloud = 'http://localhost:3000';  // https://json-server-growdlending.herokuapp.com
 
   constructor(private http: HttpClient) { }
 
@@ -85,7 +85,9 @@ export class apiHttpJsonService {
                  nom : objectInscription.nomInscription,
                  prenom : objectInscription.prenomInscription,
                  login : objectInscription.emailInscription,
-                 password : objectInscription.passwordInscription
+                 password : objectInscription.passwordInscription,
+                 sex : objectInscription.sex,
+                 photoUser : objectInscription.photoUser
             };
 
      }
@@ -99,7 +101,9 @@ export class apiHttpJsonService {
                 nom : objectInscription.nomInscription,
                 prenom : objectInscription.prenomInscription,
                 login : objectInscription.emailInscription,
-                password : objectInscription.passwordInscription
+                password : objectInscription.passwordInscription,
+                sex : objectInscription.sex,
+                photoUser : objectInscription.photoUser
          };
 
       }
@@ -113,7 +117,9 @@ export class apiHttpJsonService {
                   nom : objectInscription.nomInscription,
                   prenom : objectInscription.prenomInscription,
                   login : objectInscription.emailInscription,
-                  password : objectInscription.passwordInscription
+                  password : objectInscription.passwordInscription,
+                  sex : objectInscription.sex,
+                  photoUser : objectInscription.photoUser
          };
 
        }
@@ -138,7 +144,9 @@ export class apiHttpJsonService {
                  nom : objectUpdate.nom,
                  prenom : objectUpdate.prenom,
                  login : objectUpdate.login,
-                 password : objectUpdate.password
+                 password : objectUpdate.password,
+                 sex : objectUpdate.sex,
+                 photoUser : objectUpdate.photoUser                 
             };
 
      }
@@ -152,7 +160,9 @@ export class apiHttpJsonService {
                 nom : objectUpdate.nom,
                 prenom : objectUpdate.prenom,
                 login : objectUpdate.login,
-                password : objectUpdate.password
+                password : objectUpdate.password,
+                sex : objectUpdate.sex,
+                photoUser : objectUpdate.photoUser
          };
 
       }
@@ -166,7 +176,9 @@ export class apiHttpJsonService {
                   nom : objectUpdate.nom,
                   prenom : objectUpdate.prenom,
                   login : objectUpdate.login,
-                  password : objectUpdate.password
+                  password : objectUpdate.password,
+                  sex : objectUpdate.sex,
+                  photoUser : objectUpdate.photoUser
          };
 
        }

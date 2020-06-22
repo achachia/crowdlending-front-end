@@ -2,11 +2,7 @@
 
 Implementation des fonctionnalites suivantes :
 
-1. creation composant profilUser  
 
-2. ajout module import { CookieService } from 'ngx-cookie-service';   (npm install)
-
-3. ajout .travis.yml et modification fichier karma.conf.js
 
 
 

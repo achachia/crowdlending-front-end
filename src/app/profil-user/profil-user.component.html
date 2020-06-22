@@ -279,7 +279,7 @@
               <li class="nav-item dropdown no-arrow">
                 <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{infosUser.nom}}.{{infosUser.prenom}}</span>
-                  <img class="img-profile rounded-circle" src="https://source.unsplash.com/QAB-WJcbgJk/60x60">
+                  <img class="img-profile rounded-circle" [src]="urlImageProfil">
                 </a>
                 <!-- Dropdown - User Information -->
                 <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
@@ -361,6 +361,23 @@
                         </div>
                     </div>
                   </div>
+            
+
+                  <div class="card mb-4 py-3 border-left-primary">
+                    <div class="card-body">
+                        <div class="form-group">
+                          <label>Votre sex : </label>
+                     
+                          <select class="form-control"  [(ngModel)] = "ObjetUpdateProfil.sex" name="sexInscription">
+              
+                                  <option  value="">Selectionner votre sex</option>                                
+                                  
+                                  <option *ngFor="let option of arrayListSex"   [value]="option.key" >{{option.value}}</option>          
+                                 
+                          </select> 
+                        </div>
+                    </div>
+                  </div>
 
                   <div class="card mb-4 py-3 border-left-primary">
                     <div class="card-body">
@@ -372,28 +389,65 @@
                   </div>
 
                   <div class="form-group">
-                    <button type="submit" class="btn btn-primary" [disabled]="!updateProfilForm.form.valid">Mettre a jour votre profil</button>
+                    <button type="submit" class="btn btn-facebook btn-block" [disabled]="!updateProfilForm.form.valid">Mettre a jour votre profil</button>                   
                 </div>
                 
                 </form>
               </div>
             
-              <div class="col-lg-6 mb-4">
+              <div class="col-lg-4 mb-4">
+
+             <div class="add-photo-container">
+                <div class="card mb-4 py-3 border-left-primary">
+                  <div class="card-body">
+                    <mat-card class="add-photo-card">
+
+                      <mat-card-header>
   
-               
-            
-               
-    
-                
-    
-                
-               
-             
+                        <mat-card-title>Image profil</mat-card-title>
   
-            
+                      </mat-card-header>
   
-              </div>
-            </div>
+                      <img mat-card-image [src]="urlImageProfil" alt=""  style="width:25%;margin-left: 30%;"> 
+
+                      <div>
+
+                        <table>
+
+                              <tr>
+                                   <td>
+                                    <input    #imageInput   type="file"       (change)="imageInputChange(imageInput)"      accept="image/*" />
+
+                                   </td>
+
+                                   <td>
+                                   <!-- <button mat-raised-button color="blue" (click)="addImage()"><i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i> Modifier </button>-->
+
+                                    <button class="btn btn-light btn-icon-split" (click)="addImage()">
+                                      <span class="icon text-gray-600">
+                                        <i class="fas fa-arrow-right"></i>
+                                      </span>
+                                      <span class="text"> Modifier</span>
+                                    </button>
+                                   </td>
+
+                              </tr>
+
+                        </table>
+
+                      
+                    </div>                    
+  
+                     
+  
+                    </mat-card>
+                  </div>
+                </div>
+  
+               </div>      
+  
+             </div>
+          </div>
   
           </div>
           <!-- /.container-fluid -->
