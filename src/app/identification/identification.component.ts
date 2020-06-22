@@ -62,7 +62,7 @@ export class IdentificationComponent implements OnInit {
 
     this.apiService.identificationUser(this.ObjetLogin).subscribe((data: any) => {
 
-        console.log(data);
+        console.log('IdentificationComponent/identification', data);
 
         if (data.length === 0){
 
@@ -70,16 +70,37 @@ export class IdentificationComponent implements OnInit {
 
         }else{
 
+          if (data[0].length > 0){
 
-          this.infosUser.id =  data.id;
+            console.log('toto1');
 
-          this.infosUser.nom =  data.nom;
 
-          this.infosUser.prenom =  data.prenom;
+            this.infosUser.id =  data.id;
 
-          this.infosUser.login =  data.login;
+            this.infosUser.nom =  data.nom;
 
-          this.infosUser.password =  data.password;
+            this.infosUser.prenom =  data.prenom;
+
+            this.infosUser.login =  data.login;
+
+            this.infosUser.password =  data.password;
+
+          }else{
+            console.log('toto2');
+
+
+            this.infosUser.id =  data[0].id;
+
+            this.infosUser.nom =  data[0].nom;
+
+            this.infosUser.prenom =  data[0].prenom;
+
+            this.infosUser.login =  data[0].login;
+
+            this.infosUser.password =  data[0].password;
+
+
+          }
 
           this.infosUser.typeCompte =  this.ObjetLogin.typeCompteLogin;
 
@@ -130,15 +151,34 @@ export class IdentificationComponent implements OnInit {
 
       }else{
 
-        this.infosUser.id =  data.id;
+        if (data[0].length > 0){
 
-        this.infosUser.nom =  data.nom;
 
-        this.infosUser.prenom =  data.prenom;
+          this.infosUser.id =  data.id;
 
-        this.infosUser.login =  data.login;
+          this.infosUser.nom =  data.nom;
 
-        this.infosUser.password =  data.password;
+          this.infosUser.prenom =  data.prenom;
+
+          this.infosUser.login =  data.login;
+
+          this.infosUser.password =  data.password;
+
+
+        }else{
+
+          this.infosUser.id =  data[0].id;
+
+          this.infosUser.nom =  data[0].nom;
+
+          this.infosUser.prenom =  data[0].prenom;
+
+          this.infosUser.login =  data[0].login;
+
+          this.infosUser.password =  data[0].password;
+
+
+        }
 
         this.infosUser.typeCompte =  this.ObjetInscription.typeCompteInscription;
 

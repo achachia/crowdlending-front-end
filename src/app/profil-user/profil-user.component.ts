@@ -37,7 +37,7 @@ export class ProfilUserComponent implements OnInit {
 
       this.infosUser = JSON.parse(this.cookie.get('infosUser'));
 
-      console.log(this.infosUser);
+      console.log('ProfilUserComponent', this.infosUser);
 
       this.ObjetUpdateProfil = this.infosUser ;
 
@@ -59,7 +59,7 @@ export class ProfilUserComponent implements OnInit {
 
       }else{
       
-
+           this.isvalidUpdateProfil = true;
 
       }
 

@@ -15,6 +15,24 @@ Implementation des fonctionnalites suivantes :
 
              /***********************************************************************************************/
 
+
+
+             /** ************************************************************ **/
+
+0. https://app-crowdlending.netlify.app/
+
+1. https://json-server-growdlending.herokuapp.com/company_owner
+
+2. https://json-server-growdlending.herokuapp.com/administrator
+
+4. https://json-server-growdlending.herokuapp.com/investor
+
+
+
+
+
+             /** ******************************************************* **/
+
 # CrowdlendingFrontEnd
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 9.1.8.

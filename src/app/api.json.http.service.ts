@@ -137,7 +137,7 @@ export class apiHttpJsonService {
                  id : objectUpdate.id,
                  nom : objectUpdate.nom,
                  prenom : objectUpdate.prenom,
-                 login : objectUpdate.email,
+                 login : objectUpdate.login,
                  password : objectUpdate.password
             };
 
@@ -151,7 +151,7 @@ export class apiHttpJsonService {
                 id : objectUpdate.id,
                 nom : objectUpdate.nom,
                 prenom : objectUpdate.prenom,
-                login : objectUpdate.email,
+                login : objectUpdate.login,
                 password : objectUpdate.password
          };
 
@@ -165,7 +165,7 @@ export class apiHttpJsonService {
                   id : objectUpdate.id,
                   nom : objectUpdate.nom,
                   prenom : objectUpdate.prenom,
-                  login : objectUpdate.email,
+                  login : objectUpdate.login,
                   password : objectUpdate.password
          };
 
