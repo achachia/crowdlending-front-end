@@ -13,6 +13,9 @@ import { apiHttpJsonService } from './api.json.http.service';
 import { DashboardInvestorComponent } from './dashboard-investor/dashboard-investor.component';
 import { DashboardCompanyOwnerComponent } from './dashboard-company-owner/dashboard-company-owner.component';
 import { ProfilUserComponent } from './profil-user/profil-user.component';
+import { MaterialModule } from './material/material.module';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -23,15 +26,19 @@ import { ProfilUserComponent } from './profil-user/profil-user.component';
     DashboardInvestorComponent,
     DashboardCompanyOwnerComponent,
     ProfilUserComponent
+
   ],
   imports: [
     BrowserModule,
     RoutingModule,
     FormsModule,
     HttpClientModule,
-    RouterModule
+    RouterModule,
+    MaterialModule,
+    NoopAnimationsModule,
+    BrowserAnimationsModule
   ],
-  providers: [CookieService,apiHttpJsonService],
+  providers: [CookieService, apiHttpJsonService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
