@@ -1,5 +1,3 @@
-
-
 <body id="page-top">
 
     <!-- Page Wrapper -->
@@ -368,7 +366,7 @@
                         <div class="form-group">
                           <label>Votre sex : </label>
                      
-                          <select class="form-control"  [(ngModel)] = "ObjetUpdateProfil.sex" name="sexInscription">
+                          <select class="form-control"  [(ngModel)] = "ObjetUpdateProfil.sex" name="sexInscription" required value="">
               
                                   <option  value="">Selectionner votre sex</option>                                
                                   
@@ -387,6 +385,15 @@
                         </div>
                     </div>
                   </div>
+
+                  <div class="control-group form-group">
+
+                    <div #recaptcha ></div>
+              </div>
+
+              <div class="alert alert-danger"  *ngIf="isErreurCaptcha">
+                <strong>Erreur!</strong>  Veuillez valider votre captcha
+             </div>
 
                   <div class="form-group">
                     <button type="submit" class="btn btn-facebook btn-block" [disabled]="!updateProfilForm.form.valid">Mettre a jour votre profil</button>                   
@@ -436,9 +443,7 @@
                         </table>
 
                       
-                    </div>                    
-  
-                     
+                      </div>                      
   
                     </mat-card>
                   </div>

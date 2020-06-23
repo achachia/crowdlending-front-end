@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { DatePipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
 import { RouterModule } from '@angular/router';
@@ -37,9 +38,9 @@ import { ImageService } from './image.service';
     RouterModule,
     MaterialModule,
     NoopAnimationsModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule    
   ],
-  providers: [CookieService, apiHttpJsonService,ImageService],
+  providers: [CookieService, apiHttpJsonService,ImageService,DatePipe],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

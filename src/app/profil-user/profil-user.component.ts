@@ -1,8 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewChild} from '@angular/core';
 import { CookieService } from 'ngx-cookie-service';
 import {Router} from '@angular/router';
 import {apiHttpJsonService} from './../api.json.http.service';
 import { ImageService } from './../image.service';
+
+declare var window: any;
 
 
 @Component({
@@ -12,6 +14,9 @@ import { ImageService } from './../image.service';
 })
 export class ProfilUserComponent implements OnInit {
 
+
+  @ViewChild('recaptcha', {static: true }) recaptchaElement: ElementRef;
+
   public infosUser = {
                      id : '',
                      nom: '',
@@ -19,6 +24,7 @@ export class ProfilUserComponent implements OnInit {
                      login : '',
                      password : '',
                      sex : '',
+                     dateNaissance : '',
                      photoUser : '',
                      typeCompte : ''
      };
@@ -31,6 +37,7 @@ export class ProfilUserComponent implements OnInit {
                                password : '',
                                photoUser : '',
                                sex : '',
+                               dateNaissance : '',
                                typeCompte : ''
        };
 
@@ -51,6 +58,10 @@ export class ProfilUserComponent implements OnInit {
                             {key: 'M', value: 'Homme'},
                             {key: 'F', value: 'Femme'}
     ];
+
+    private isvalidCaptcha = false ;
+
+    public isErreurCaptcha = false;
 
   constructor(private router: Router, private cookie: CookieService, private apiService: apiHttpJsonService,
               private imageService: ImageService) {
@@ -84,31 +95,70 @@ export class ProfilUserComponent implements OnInit {
 
   }
 
-  ngOnInit(): void { }
+  ngOnInit(): void {
+
+    this.addRecaptchaScript();
+  }
+
+  addRecaptchaScript() {
+
+    window.grecaptchaCallback = () => {
+      this.renderReCaptcha();
+    };
+
+    (function(d, s, id, obj){
+      let js, fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) { obj.renderReCaptcha(); return; }
+      js = d.createElement(s); js.id = id;
+      js.src = 'https://www.google.com/recaptcha/api.js?onload=grecaptchaCallback&amp;render=explicit';
+      fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'recaptcha-jssdk', this));
+
+  }
+
+  renderReCaptcha() {
+    window.grecaptcha.render(this.recaptchaElement.nativeElement, {
+      sitekey : '6Lf4I6gZAAAAAMp1E9YI1FJghdQ20CNRtAV9d55y',
+      callback: (response) => {
+          console.log('response', response);
+
+          this.isvalidCaptcha = true;
+      }
+    });
+  }
 
   onFormSubmitUpdateProfil(){
 
 
-    this.apiService.updateProfilUser(this.ObjetUpdateProfil).subscribe((data: any) => {
-
-      console.log(data);
-
-      if (data.length === 0){
-
-             this.isErreurUpdatePofil = true;
-
-      }else{
-
-           this.isvalidUpdateProfil = true;
-
-      }
+    if (this.isvalidCaptcha){
 
 
+      this.apiService.updateProfilUser(this.ObjetUpdateProfil).subscribe((data: any) => {
+
+        console.log(data);
+
+        if (data.length === 0){
+
+               this.isErreurUpdatePofil = true;
+
+        }else{
+
+             this.isvalidUpdateProfil = true;
+
+        }
 
 
-     }, (error: any) => {
+       }, (error: any) => {
 
-    });
+      });
+
+    }else{
+
+      this.isErreurCaptcha = true;
+    }
+
+
+
 
   }
 

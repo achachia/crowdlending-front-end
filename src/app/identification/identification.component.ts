@@ -1,9 +1,13 @@
-import { Component, OnInit, ElementRef, ViewChild} from '@angular/core';
+import { Component, OnInit, ElementRef, ViewChild, EventEmitter} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {apiHttpJsonService} from './../api.json.http.service';
 import { CookieService } from 'ngx-cookie-service';
+import { DatePipe } from '@angular/common';
 
-declare const window: any;
+
+declare var window: any;
+
+
 
 @Component({
   selector: 'app-identification',
@@ -30,6 +34,7 @@ export class IdentificationComponent implements OnInit {
                        passwordInscription : '',
                        sex : '',
                        photoUser : '',
+                       dateNaissance : '',
                        typeCompteInscription : ''
     };
 
@@ -41,6 +46,7 @@ export class IdentificationComponent implements OnInit {
                         password : '',
                         sex : '',
                         photoUser : '',
+                        dateNaissance : '',
                         typeCompte : ''
    };
 
@@ -52,9 +58,14 @@ export class IdentificationComponent implements OnInit {
 
   public isvalidInscription = false;
 
+  private isvalidCaptcha = false ;
 
+  public isErreurCaptcha = false;
 
-  constructor(private route: ActivatedRoute, private router: Router, private apiService: apiHttpJsonService, private cookie: CookieService) {
+  events: string[] = [];
+
+  constructor(private route: ActivatedRoute, private router: Router, private apiService: apiHttpJsonService,
+              private cookie: CookieService, private datePipe: DatePipe) {
 
 
    /* this.route.params.subscribe(params => {
@@ -69,6 +80,17 @@ export class IdentificationComponent implements OnInit {
 
     this.addRecaptchaScript();
    }
+
+
+
+   addEventDateNaissance(event) {
+
+    this.ObjetInscription.dateNaissance = this.datePipe.transform(event.value, 'MM-dd-yyyy');
+
+    console.log(this.datePipe.transform(event.value, 'MM-dd-yyyy'));
+
+
+  }
 
   addRecaptchaScript() {
 
@@ -88,9 +110,11 @@ export class IdentificationComponent implements OnInit {
 
   renderReCaptcha() {
     window.grecaptcha.render(this.recaptchaElement.nativeElement, {
-      sitekey : '6LcLIagZAAAAAA__BTnCWvIDOQg1oh_oDqtdt8vx',
+      sitekey : '6Lf4I6gZAAAAAMp1E9YI1FJghdQ20CNRtAV9d55y',
       callback: (response) => {
-          console.log(response);
+          console.log('response', response);
+
+          this.isvalidCaptcha = true;
       }
     });
   }
@@ -126,6 +150,8 @@ export class IdentificationComponent implements OnInit {
 
             this.infosUser.sex =  data.sex;
 
+            this.infosUser.dateNaissance =  data.dateNaissance;
+
           }else{
 
             console.log('toto2');
@@ -143,6 +169,8 @@ export class IdentificationComponent implements OnInit {
             this.infosUser.photoUser =  data[0].photoUser;
 
             this.infosUser.sex =  data[0].sex;
+
+            this.infosUser.dateNaissance =  data[0].dateNaissance;
 
 
           }
@@ -186,81 +214,96 @@ export class IdentificationComponent implements OnInit {
   public onFormSubmitInscription(){
 
 
-    this.apiService.inscriptionUser(this.ObjetInscription).subscribe((data: any) => {
+    if (this.isvalidCaptcha){
 
-      console.log(data);
+      this.apiService.inscriptionUser(this.ObjetInscription).subscribe((data: any) => {
 
-      if (data.length === 0){
+        console.log(data);
 
-             this.isErreurInscription = true;
+        if (data.length === 0){
 
-      }else{
-
-        if (data[0]  && data[0].length > 0){
-
-          console.log('toto1');
-
-          this.infosUser.id =  data[0].id;
-
-          this.infosUser.nom =  data[0].nom;
-
-          this.infosUser.prenom =  data[0].prenom;
-
-          this.infosUser.login =  data[0].login;
-
-          this.infosUser.password =  data[0].password;
-
-          this.infosUser.sex =  data[0].sex;
-
+               this.isErreurInscription = true;
 
         }else{
 
-          console.log('toto2');
+          if (data[0]  && data[0].length > 0){
 
-          this.infosUser.id =  data.id;
+            console.log('toto1');
 
-          this.infosUser.nom =  data.nom;
+            this.infosUser.id =  data[0].id;
 
-          this.infosUser.prenom =  data.prenom;
+            this.infosUser.nom =  data[0].nom;
 
-          this.infosUser.login =  data.login;
+            this.infosUser.prenom =  data[0].prenom;
 
-          this.infosUser.password =  data.password;
+            this.infosUser.login =  data[0].login;
 
-          this.infosUser.sex =  data.sex;
+            this.infosUser.password =  data[0].password;
+
+            this.infosUser.sex =  data[0].sex;
+
+            this.infosUser.dateNaissance =  data[0].dateNaissance;
+
+
+          }else{
+
+            console.log('toto2');
+
+            this.infosUser.id =  data.id;
+
+            this.infosUser.nom =  data.nom;
+
+            this.infosUser.prenom =  data.prenom;
+
+            this.infosUser.login =  data.login;
+
+            this.infosUser.password =  data.password;
+
+            this.infosUser.sex =  data.sex;
+
+            this.infosUser.dateNaissance =  data.dateNaissance;
+          }
+
+          this.infosUser.typeCompte =  this.ObjetInscription.typeCompteInscription;
+
+          this.cookie.set('infosUser', JSON.stringify(this.infosUser));
+
+          if (this.ObjetInscription.typeCompteInscription === '1'){
+
+            this.router.navigate(['/DashboardAdministrator']);
+
+          }
+
+          if (this.ObjetInscription.typeCompteInscription === '2'){
+
+          this.router.navigate(['/DashboardCompanyOwner']);
+
+           }
+
+          if (this.ObjetInscription.typeCompteInscription === '3'){
+
+             this.router.navigate(['/DashboardInvestor']);
+
+           }
+
+
         }
 
-        this.infosUser.typeCompte =  this.ObjetInscription.typeCompteInscription;
-
-        this.cookie.set('infosUser', JSON.stringify(this.infosUser));
-
-        if (this.ObjetInscription.typeCompteInscription === '1'){
-
-          this.router.navigate(['/DashboardAdministrator']);
-
-        }
-
-        if (this.ObjetInscription.typeCompteInscription === '2'){
-
-        this.router.navigate(['/DashboardCompanyOwner']);
-
-         }
-
-        if (this.ObjetInscription.typeCompteInscription === '3'){
-
-           this.router.navigate(['/DashboardInvestor']);
-
-         }
-
-
-      }
 
 
 
+    }, (error: any) => {
 
-  }, (error: any) => {
+    });
 
-  });
+
+    }else{
+
+      this.isErreurCaptcha = true;
+    }
+
+
+
 
 
   }

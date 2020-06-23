@@ -1,8 +1,8 @@
-            /******************************* commit : 1.0.0.10****************************************************/
+            /******************************* commit : 1.0.0.19****************************************************/
 
 Implementation des fonctionnalites suivantes :
 
-
+0. implementation le captcha de google dans les composants  identification [inscription] && profil-user
 
 
 
