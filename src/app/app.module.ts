@@ -18,6 +18,8 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { apiHttpJsonService } from './api.json.http.service';
 import { ImageService } from './image.service';
+import { NgxUiLoaderModule } from 'ngx-ui-loader';
+
 
 @NgModule({
   declarations: [
@@ -38,7 +40,9 @@ import { ImageService } from './image.service';
     RouterModule,
     MaterialModule,
     NoopAnimationsModule,
-    BrowserAnimationsModule    
+    BrowserAnimationsModule,
+    NgxUiLoaderModule
+
   ],
   providers: [CookieService, apiHttpJsonService,ImageService,DatePipe],
   bootstrap: [AppComponent]

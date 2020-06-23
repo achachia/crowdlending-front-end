@@ -3,6 +3,8 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {apiHttpJsonService} from './../api.json.http.service';
 import { CookieService } from 'ngx-cookie-service';
 import { DatePipe } from '@angular/common';
+import { NgxUiLoaderService } from 'ngx-ui-loader';
+
 
 
 declare var window: any;
@@ -65,7 +67,7 @@ export class IdentificationComponent implements OnInit {
   events: string[] = [];
 
   constructor(private route: ActivatedRoute, private router: Router, private apiService: apiHttpJsonService,
-              private cookie: CookieService, private datePipe: DatePipe) {
+              private cookie: CookieService, private datePipe: DatePipe, private ngxService: NgxUiLoaderService) {
 
 
    /* this.route.params.subscribe(params => {
@@ -120,6 +122,8 @@ export class IdentificationComponent implements OnInit {
   }
 
   public onFormSubmitLogin() {
+
+    this.ngxService.start();
 
 
     this.apiService.identificationUser(this.ObjetLogin).subscribe((data: any) => {
@@ -179,28 +183,30 @@ export class IdentificationComponent implements OnInit {
 
           this.cookie.set('infosUser', JSON.stringify(this.infosUser));
 
+
+
           if (this.ObjetLogin.typeCompteLogin === '1'){
 
-            this.router.navigate(['/DashboardAdministrator']);
+             this.router.navigate(['/DashboardAdministrator']);
 
            }
 
           if (this.ObjetLogin.typeCompteLogin === '2'){
 
-          this.router.navigate(['/DashboardCompanyOwner']);
+            this.router.navigate(['/DashboardCompanyOwner']);
 
            }
 
           if (this.ObjetLogin.typeCompteLogin === '3'){
 
-          this.router.navigate(['/DashboardInvestor']);
+              this.router.navigate(['/DashboardInvestor']);
 
           }
 
 
       }
 
-
+        this.ngxService.stop();
 
 
     }, (error: any) => {
@@ -215,6 +221,8 @@ export class IdentificationComponent implements OnInit {
 
 
     if (this.isvalidCaptcha){
+
+      this.ngxService.start();
 
       this.apiService.inscriptionUser(this.ObjetInscription).subscribe((data: any) => {
 
@@ -296,6 +304,7 @@ export class IdentificationComponent implements OnInit {
 
     });
 
+      this.ngxService.stop();
 
     }else{
 

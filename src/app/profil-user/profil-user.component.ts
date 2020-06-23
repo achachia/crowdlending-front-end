@@ -3,6 +3,7 @@ import { CookieService } from 'ngx-cookie-service';
 import {Router} from '@angular/router';
 import {apiHttpJsonService} from './../api.json.http.service';
 import { ImageService } from './../image.service';
+import { NgxUiLoaderService } from 'ngx-ui-loader';
 
 declare var window: any;
 
@@ -64,7 +65,7 @@ export class ProfilUserComponent implements OnInit {
     public isErreurCaptcha = false;
 
   constructor(private router: Router, private cookie: CookieService, private apiService: apiHttpJsonService,
-              private imageService: ImageService) {
+              private imageService: ImageService, private ngxService: NgxUiLoaderService) {
 
       this.infosUser = JSON.parse(this.cookie.get('infosUser'));
 
@@ -132,6 +133,8 @@ export class ProfilUserComponent implements OnInit {
 
     if (this.isvalidCaptcha){
 
+      this.ngxService.start();
+
 
       this.apiService.updateProfilUser(this.ObjetUpdateProfil).subscribe((data: any) => {
 
@@ -152,6 +155,8 @@ export class ProfilUserComponent implements OnInit {
 
       });
 
+      this.ngxService.stop();
+
     }else{
 
       this.isErreurCaptcha = true;
@@ -170,6 +175,8 @@ export class ProfilUserComponent implements OnInit {
 
   addImage() {
 
+    this.ngxService.start();
+
     const infoObject = {
                       title: this.infosUser.nom + '_avatar',
                       description: this.infosUser.nom + '_avatar'
@@ -182,6 +189,8 @@ export class ProfilUserComponent implements OnInit {
       this.urlImageProfil = imageData.data.link;
 
       this.ObjetUpdateProfil.photoUser = imageData.data.link;
+
+      this.ngxService.stop();
 
 
 

@@ -1,8 +1,10 @@
-            /******************************* commit : 1.0.0.19****************************************************/
+            /******************************* commit : 1.0.0.20****************************************************/
 
 Implementation des fonctionnalites suivantes :
 
-0. implementation le captcha de google dans les composants  identification [inscription] && profil-user
+0. implementation le module ngx-ui-loader  // documentation : https://www.npmjs.com/package/ngx-ui-loader
+
+1. implementation le module ngx-ui-loader au niveau les deux composants identification && profil-user
 
 
 
