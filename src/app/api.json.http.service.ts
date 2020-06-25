@@ -11,7 +11,7 @@ export class apiHttpJsonService {
 
   private apiUrlLocal = 'http://localhost:3000';
 
-  private apiUrlCloud = 'http://localhost:3000';  // https://json-server-growdlending.herokuapp.com
+  private apiUrlCloud = 'https://json-server-growdlending.herokuapp.com';  // https://json-server-growdlending.herokuapp.com
 
   constructor(private http: HttpClient) { }
 
