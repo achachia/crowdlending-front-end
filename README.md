@@ -1,10 +1,10 @@
-            /******************************* commit : 1.0.0.20****************************************************/
+            /******************************* commit : 1.0.1****************************************************/
 
 Implementation des fonctionnalites suivantes :
 
-0. implementation le module ngx-ui-loader  // documentation : https://www.npmjs.com/package/ngx-ui-loader
+0. restructuration les templates de projet
 
-1. implementation le module ngx-ui-loader au niveau les deux composants identification && profil-user
+1.  create composant add-project  && list-projects  && show-project  &&  edit-project
 
 
 
@@ -24,6 +24,10 @@ Implementation des fonctionnalites suivantes :
 2. https://json-server-growdlending.herokuapp.com/administrator
 
 4. https://json-server-growdlending.herokuapp.com/investor
+
+5. https://api.imgur.com/   (api free upload des images)
+
+6. https://www.iconfinder.com  // site des images 
 
 
 

@@ -37,7 +37,9 @@ export class IdentificationComponent implements OnInit {
                        sex : '',
                        photoUser : '',
                        dateNaissance : '',
-                       typeCompteInscription : ''
+                       typeCompteInscription : '',
+                       date_created: '',
+                       date_update: ''
     };
 
     public infosUser = {
@@ -49,7 +51,9 @@ export class IdentificationComponent implements OnInit {
                         sex : '',
                         photoUser : '',
                         dateNaissance : '',
-                        typeCompte : ''
+                        typeCompte : '',
+                        date_created: '',
+                        date_update: ''
    };
 
   public isErreurLogin = false;
@@ -81,15 +85,29 @@ export class IdentificationComponent implements OnInit {
   ngOnInit(): void {
 
     this.addRecaptchaScript();
+
+    const date = new Date();
+
+    this.ObjetInscription.date_created = date.toLocaleString('fr-FR', {
+                                               weekday: 'long',
+                                               year : 'numeric',
+                                               month : 'long',
+                                               day : 'numeric',
+                                               hour : 'numeric',
+                                               minute : 'numeric',
+                                               second : 'numeric',
+
+                     });
+
    }
 
 
 
    addEventDateNaissance(event) {
 
-    this.ObjetInscription.dateNaissance = this.datePipe.transform(event.value, 'MM-dd-yyyy');
+    this.ObjetInscription.dateNaissance = this.datePipe.transform(event.value, 'dd-MM-yyyy');
 
-    console.log(this.datePipe.transform(event.value, 'MM-dd-yyyy'));
+    console.log(this.datePipe.transform(event.value, 'dd-MM-yyyy'));
 
 
   }
@@ -117,6 +135,8 @@ export class IdentificationComponent implements OnInit {
           console.log('response', response);
 
           this.isvalidCaptcha = true;
+
+          this.isErreurCaptcha = false;
       }
     });
   }
@@ -156,6 +176,10 @@ export class IdentificationComponent implements OnInit {
 
             this.infosUser.dateNaissance =  data.dateNaissance;
 
+            this.infosUser.date_created =  data.date_created;
+
+            this.infosUser.date_update =  data.date_update;
+
           }else{
 
             console.log('toto2');
@@ -176,6 +200,10 @@ export class IdentificationComponent implements OnInit {
 
             this.infosUser.dateNaissance =  data[0].dateNaissance;
 
+            this.infosUser.date_created =  data[0].date_created;
+
+            this.infosUser.date_update =  data[0].date_update;
+
 
           }
 
@@ -183,25 +211,7 @@ export class IdentificationComponent implements OnInit {
 
           this.cookie.set('infosUser', JSON.stringify(this.infosUser));
 
-
-
-          if (this.ObjetLogin.typeCompteLogin === '1'){
-
-             this.router.navigate(['/DashboardAdministrator']);
-
-           }
-
-          if (this.ObjetLogin.typeCompteLogin === '2'){
-
-            this.router.navigate(['/DashboardCompanyOwner']);
-
-           }
-
-          if (this.ObjetLogin.typeCompteLogin === '3'){
-
-              this.router.navigate(['/DashboardInvestor']);
-
-          }
+          this.router.navigate(['/profilUser']);
 
 
       }
@@ -252,6 +262,10 @@ export class IdentificationComponent implements OnInit {
 
             this.infosUser.dateNaissance =  data[0].dateNaissance;
 
+            this.infosUser.date_created =  data[0].date_created;
+
+            this.infosUser.date_update =  data[0].date_update;
+
 
           }else{
 
@@ -270,29 +284,17 @@ export class IdentificationComponent implements OnInit {
             this.infosUser.sex =  data.sex;
 
             this.infosUser.dateNaissance =  data.dateNaissance;
+
+            this.infosUser.date_created =  data.date_created;
+
+            this.infosUser.date_update =  data.date_update;
           }
 
           this.infosUser.typeCompte =  this.ObjetInscription.typeCompteInscription;
 
           this.cookie.set('infosUser', JSON.stringify(this.infosUser));
 
-          if (this.ObjetInscription.typeCompteInscription === '1'){
-
-            this.router.navigate(['/DashboardAdministrator']);
-
-          }
-
-          if (this.ObjetInscription.typeCompteInscription === '2'){
-
-          this.router.navigate(['/DashboardCompanyOwner']);
-
-           }
-
-          if (this.ObjetInscription.typeCompteInscription === '3'){
-
-             this.router.navigate(['/DashboardInvestor']);
-
-           }
+          this.router.navigate(['/profilUser']);
 
 
         }
@@ -306,10 +308,10 @@ export class IdentificationComponent implements OnInit {
 
       this.ngxService.stop();
 
-    }else{
+  }else{
 
       this.isErreurCaptcha = true;
-    }
+  }
 
 
 

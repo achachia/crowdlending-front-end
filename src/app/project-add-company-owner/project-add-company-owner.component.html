@@ -1,0 +1,246 @@
+<ngx-ui-loader></ngx-ui-loader>
+<body id="page-top">
+
+    <!-- Page Wrapper -->
+    <div id="wrapper">
+  
+      <!-- Sidebar -->
+      <app-side-bar-left-compant-owner-templates *ngIf="infosUser.typeCompte == '2'"></app-side-bar-left-compant-owner-templates>
+
+      <app-side-bar-left-admin-templates *ngIf="infosUser.typeCompte == '1'"></app-side-bar-left-admin-templates>
+
+      <app-side-bar-left-investor-templates  *ngIf="infosUser.typeCompte == '3'"></app-side-bar-left-investor-templates>
+      <!-- End of Sidebar -->
+  
+      <!-- Content Wrapper -->
+      <div id="content-wrapper" class="d-flex flex-column">
+  
+        <!-- Main Content -->
+        <div id="content">
+  
+          <!-- Topbar  start Nav -->
+
+          <app-nav-admin-templates *ngIf="infosUser.typeCompte == '1'"></app-nav-admin-templates>
+
+          <app-nav-compant-owner-templates *ngIf="infosUser.typeCompte == '2'"></app-nav-compant-owner-templates>
+
+          <app-nav-investor-templates *ngIf="infosUser.typeCompte == '3'"></app-nav-investor-templates>
+
+          
+         
+          <!-- End of Topbar end Nav -->
+  
+          <!-- Begin Page Content -->
+          <div class="container-fluid">
+  
+            <!-- Page Heading -->
+            <div class="d-sm-flex align-items-center justify-content-between mb-4">
+              <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
+             
+            </div>
+  
+          
+            <div class="row">
+  
+              <!-- Content Column -->
+              <div class="col-lg-6 mb-4">
+
+                <form   class="form-horizontal" #addProjectForm = "ngForm"  (ngSubmit)="onFormSubmitAddProject()">
+
+                  <div class="card mb-4 py-3 border-left-primary">
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label>Votre nom : </label>
+                            <input type="text" class="form-control" [(ngModel)] = "ObjetProject.nom" name = "nom" placeholder="nom de projet *" required value="" />
+                        </div>
+                    </div>
+                  </div>
+
+                  <div class="card mb-4 py-3 border-left-primary">
+
+                    <div class="card-body">
+
+                        <div class="form-group">
+
+                            <label>Décrivez brièvement votre projet : </label>
+
+                            <textarea rows="5" cols="33" class="form-control" [(ngModel)] = "ObjetProject.description" name = "description" placeholder="description de projet *" required value="" ></textarea>  
+
+                        </div>
+
+                    </div>
+
+                  </div>
+
+                  <div class="card mb-4 py-3 border-left-primary">
+
+                    <div class="card-body">
+
+                        <div class="form-group">
+
+                            <label>Votre projet est porté par : </label>      
+                            
+                            <div class="controls">
+                             
+                              <select class="form-control"  [(ngModel)] = "ObjetProject.portes_projectId" name="porte_project">
+                  
+                                      <option  value="">Selectionner porté de projet</option>               
+                  
+                                      <option  value="1" >moi-même</option>  
+                                      
+                                      <option  value="2" >mon association</option> 
+                  
+                                      <option  value="3" >mon entreprise</option> 
+                              </select> 
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                  </div>
+
+                  <div class="card mb-4 py-3 border-left-primary">
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label> Quel est le montant minimal que vous voulez collecter : </label>
+                            <input type="text" class="form-control" [(ngModel)] = "ObjetProject.montant_minimun" name = "montant_minimun" placeholder="montant minimun *" required value="" />
+                        </div>
+                    </div>
+
+                  </div>
+
+                  <div class="card mb-4 py-3 border-left-primary">
+                    <div class="card-body">
+                      <div class="form-group">
+
+                        <mat-form-field  style=" background-color: white; color:#858796;width:100%">
+    
+                         <input matInput [matDatepicker] = "picker" placeholder = "Date de naissance" (dateChange)=" addEventDateLimiteCollecte($event)"  name = "dateLimiteCollecte" required >
+    
+                         <mat-datepicker-toggle matSuffix [for] = "picker"></mat-datepicker-toggle>
+    
+                         <mat-datepicker #picker></mat-datepicker>
+    
+                       </mat-form-field>
+    
+                     </div>
+                    </div>
+
+                  </div>
+
+                  <div class="card mb-4 py-3 border-left-primary">
+
+                    <div class="card-body">
+
+                      <div class="form-group">
+
+                        <div class="custom-control custom-radio">
+      
+                          <input class="form-check-input" type="radio" value="1"  (click)="changeValue($event)" name="defaultCheck">
+
+                          <label class="form-check-label">Du concret</label> <br>
+      
+                         <span>Un objet, un produit, un service, des pré-ventes, une expérience, etc.</span>
+      
+                        </div>
+      
+                        <div class="custom-control custom-radio mb-3">
+      
+                          <input class="form-check-input"  type="radio" value="2" (click)="changeValue($event)" name="defaultCheck">
+      
+                          <label class="form-check-label">Principalement du symbolique</label>  <br> 
+      
+                           <span>Des remerciements, des petits cadeaux sans valeur marchande etc.</span>
+      
+                        </div>
+                        
+                       
+                       </div>
+      
+                    </div>
+
+                  </div>                 
+
+                
+                  <div class="control-group form-group">
+
+                    <div #recaptcha ></div>
+
+                  </div>
+
+                   <div class="alert alert-danger"  *ngIf="isErreurCaptcha">
+
+                        <strong>Erreur!</strong>  Veuillez valider votre captcha
+                   </div>
+
+                  <div class="form-group">
+                     <button type="submit" class="btn btn-facebook btn-block" [disabled]="!addProjectForm.form.valid">Enregistrer</button>                   
+                   </div>
+
+               </form>
+
+       
+              </div>
+            
+              <div class="col-lg-4 mb-4">
+
+     
+  
+              </div>
+          </div>
+  
+          </div>
+          <!-- /.container-fluid -->
+  
+        </div>
+        <!-- End of Main Content -->
+  
+        <!-- Footer -->
+        <app-footer-admin-templates *ngIf="infosUser.typeCompte == '1'"></app-footer-admin-templates>
+
+        <app-footer-compant-owner-templates *ngIf="infosUser.typeCompte == '2'"></app-footer-compant-owner-templates>
+
+        <app-footer-investor-templates *ngIf="infosUser.typeCompte == '3'"></app-footer-investor-templates>
+        <!-- End of Footer -->
+  
+      </div>
+      <!-- End of Content Wrapper -->
+  
+    </div>
+    <!-- End of Page Wrapper -->
+  
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="#page-top">
+      <i class="fas fa-angle-up"></i>
+    </a>
+  
+    <!-- Logout Modal-->
+    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">×</span>
+            </button>
+          </div>
+          <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+          <div class="modal-footer">
+            <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+            <button class="btn btn-primary">Logout</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+  
+  
+  </body>
+  
+  
+  
+  
+
+

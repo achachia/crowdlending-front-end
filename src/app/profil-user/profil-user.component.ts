@@ -5,6 +5,7 @@ import {apiHttpJsonService} from './../api.json.http.service';
 import { ImageService } from './../image.service';
 import { NgxUiLoaderService } from 'ngx-ui-loader';
 
+
 declare var window: any;
 
 
@@ -27,7 +28,9 @@ export class ProfilUserComponent implements OnInit {
                      sex : '',
                      dateNaissance : '',
                      photoUser : '',
-                     typeCompte : ''
+                     typeCompte : '',
+                     date_created: '',
+                     date_update: ''
      };
 
      public ObjetUpdateProfil = {
@@ -39,7 +42,9 @@ export class ProfilUserComponent implements OnInit {
                                photoUser : '',
                                sex : '',
                                dateNaissance : '',
-                               typeCompte : ''
+                               typeCompte : '',
+                               date_created: '',
+                               date_update: ''
        };
 
     public isErreurUpdatePofil = false;
@@ -52,13 +57,13 @@ export class ProfilUserComponent implements OnInit {
 
     public imageFile: File;
 
-    public urlImageProfil: string;
-
     public arrayListSex = [
 
                             {key: 'M', value: 'Homme'},
                             {key: 'F', value: 'Femme'}
     ];
+
+    public urlImageProfil = '';
 
     private isvalidCaptcha = false ;
 
@@ -71,14 +76,16 @@ export class ProfilUserComponent implements OnInit {
 
       if (this.infosUser.photoUser === ''){
 
-
-
         if (this.infosUser.sex === 'F') {
 
-           this.urlImageProfil = './assets/img/users/user_f.png';
+          this.infosUser.photoUser = './assets/img/users/user_f.png';
+
+          this.urlImageProfil = './assets/img/users/user_f.png';
         }
 
         if (this.infosUser.sex === 'M') {
+
+          this.infosUser.photoUser = './assets/img/users/user_m.png';
 
           this.urlImageProfil = './assets/img/users/user_m.png';
           }
@@ -99,6 +106,20 @@ export class ProfilUserComponent implements OnInit {
   ngOnInit(): void {
 
     this.addRecaptchaScript();
+
+    const date = new Date();
+
+    this.ObjetUpdateProfil.date_update = date.toLocaleString('fr-FR', {
+                                               weekday: 'long',
+                                               year : 'numeric',
+                                               month : 'long',
+                                               day : 'numeric',
+                                               hour : 'numeric',
+                                               minute : 'numeric',
+                                               second : 'numeric',
+
+                     });
+
   }
 
   addRecaptchaScript() {
@@ -124,6 +145,8 @@ export class ProfilUserComponent implements OnInit {
           console.log('response', response);
 
           this.isvalidCaptcha = true;
+
+          this.isErreurCaptcha = false;
       }
     });
   }
@@ -154,6 +177,8 @@ export class ProfilUserComponent implements OnInit {
        }, (error: any) => {
 
       });
+
+      this.isErreurCaptcha = false;
 
       this.ngxService.stop();
 

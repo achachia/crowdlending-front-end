@@ -8,9 +8,10 @@ import { MatInputModule } from '@angular/material/input';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 
+import {MatRadioModule} from '@angular/material/radio';
+
 
 // import {MatCheckboxModule} from '@angular/material/checkbox';
-// import {MatRadioModule} from '@angular/material/radio';
 // import {MatSelectModule} from '@angular/material/select';
 
 @NgModule({
@@ -22,7 +23,8 @@ import { MatNativeDateModule } from '@angular/material/core';
     MatInputModule,
     MatCardModule,
     MatDatepickerModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    MatRadioModule
   ],
   exports: [MatButtonModule, MatFormFieldModule, MatInputModule, MatCardModule, MatDatepickerModule, MatNativeDateModule]
 })

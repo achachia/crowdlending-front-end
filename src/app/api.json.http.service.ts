@@ -87,7 +87,10 @@ export class apiHttpJsonService {
                  login : objectInscription.emailInscription,
                  password : objectInscription.passwordInscription,
                  sex : objectInscription.sex,
-                 photoUser : objectInscription.photoUser
+                 photoUser : objectInscription.photoUser,
+                 dateNaissance : objectInscription.dateNaissance,
+                 date_created: objectInscription.date_created,
+                 date_update: objectInscription.date_update
             };
 
      }
@@ -103,7 +106,10 @@ export class apiHttpJsonService {
                 login : objectInscription.emailInscription,
                 password : objectInscription.passwordInscription,
                 sex : objectInscription.sex,
-                photoUser : objectInscription.photoUser
+                photoUser : objectInscription.photoUser,
+                dateNaissance : objectInscription.dateNaissance,
+                date_created: objectInscription.date_created,
+                date_update: objectInscription.date_update
          };
 
       }
@@ -119,7 +125,10 @@ export class apiHttpJsonService {
                   login : objectInscription.emailInscription,
                   password : objectInscription.passwordInscription,
                   sex : objectInscription.sex,
-                  photoUser : objectInscription.photoUser
+                  photoUser : objectInscription.photoUser,
+                  dateNaissance : objectInscription.dateNaissance,
+                  date_created: objectInscription.date_created,
+                  date_update: objectInscription.date_update
          };
 
        }
@@ -146,11 +155,14 @@ export class apiHttpJsonService {
                  login : objectUpdate.login,
                  password : objectUpdate.password,
                  sex : objectUpdate.sex,
-                 photoUser : objectUpdate.photoUser                 
-            };
+                 photoUser : objectUpdate.photoUser,
+                 dateNaissance : objectUpdate.dateNaissance,
+                 date_created: objectUpdate.date_created,
+                 date_update: objectUpdate.date_update
 
-     }
+     };
 
+    }
     if (objectUpdate.typeCompte === '2'){
 
         url = this.apiUrlCloud + '/company_owner/' + objectUpdate.id;
@@ -162,7 +174,10 @@ export class apiHttpJsonService {
                 login : objectUpdate.login,
                 password : objectUpdate.password,
                 sex : objectUpdate.sex,
-                photoUser : objectUpdate.photoUser
+                photoUser : objectUpdate.photoUser,
+                dateNaissance : objectUpdate.dateNaissance,
+                date_created: objectUpdate.date_created,
+                date_update: objectUpdate.date_update
          };
 
       }
@@ -178,7 +193,10 @@ export class apiHttpJsonService {
                   login : objectUpdate.login,
                   password : objectUpdate.password,
                   sex : objectUpdate.sex,
-                  photoUser : objectUpdate.photoUser
+                  photoUser : objectUpdate.photoUser,
+                  dateNaissance : objectUpdate.dateNaissance,
+                  date_created: objectUpdate.date_created,
+                  date_update: objectUpdate.date_update
          };
 
        }
@@ -187,10 +205,6 @@ export class apiHttpJsonService {
 
 
   }
-
-
-
-
 
 
 }
