@@ -11,7 +11,7 @@ export class apiHttpJsonService {
 
   private apiUrlLocal = 'http://localhost:3000';
 
-  private apiUrlCloud = 'https://json-server-growdlending.herokuapp.com';  // https://json-server-growdlending.herokuapp.com
+  private apiUrlCloud = 'http://localhost:3000';  // https://json-server-growdlending.herokuapp.com
 
   constructor(private http: HttpClient) { }
 
@@ -202,6 +202,42 @@ export class apiHttpJsonService {
        }
 
     return this.http.put(url, params);
+
+
+  }
+
+  public addProjectByCompanyOwner(objectProject){
+
+    const url = this.apiUrlCloud + '/projectsCompanyOwner';
+
+
+    return this.http.post(url, objectProject);
+
+  }
+
+  public addImageProject(objectImage){
+
+    const url = this.apiUrlCloud + '/imagesProjects';
+
+
+    return this.http.post(url, objectImage);
+
+  }
+
+  listProjectByCompanyOwner(){
+
+    const url = this.apiUrlCloud + '/projectsCompanyOwner';
+
+    return this.http.get(url);
+
+
+  }
+
+  getListCategorieProject(){
+
+    const url = this.apiUrlCloud + '/categorie_project';
+
+    return this.http.get(url);
 
 
   }

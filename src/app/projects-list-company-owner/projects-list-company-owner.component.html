@@ -43,16 +43,40 @@
             <div class="row">                      
   
               <!-- Content Column -->
-              <div class="col-lg-6 mb-4">
+              <div class="col-lg-12 mb-12">
+
+                <div class="row text-center">
+  
+                  <div class="col-lg-3 col-md-6 mb-4"  *ngFor="let project of listProjects">
+                    <div class="card h-100">
+                      <img class="card-img-top" [src]="project.afficheProject" alt="">
+                      <div class="card-body">
+                        <h4 class="card-title">{{project.nom}}</h4>
+                        <p class="card-text">{{project.description}}</p>
+                        <h5 class="card-title">{{project.categorie_project}}</h5>
+                        <h5 class="card-title">{{project.statut_project}}</h5>
+                      </div>
+                      <div class="card-footer">
+
+                        <a  class="btn btn-primary" [routerLink]="['/compangy_owner/projetcs/show' , project.id ]"   >Consulter</a>
+
+                        <a  class="btn btn-success" [routerLink]="['/compangy_owner/projetcs/edit' , project.id ]"  style="margin-left :5%" >Editer</a>
+
+
+                  
+                        
+                      </div>
+                    </div>
+                  </div>   
+            
+                  
+            
+                </div>
 
        
               </div>
             
-              <div class="col-lg-4 mb-4">
-
-     
-  
-              </div>
+             
           </div>
   
           </div>

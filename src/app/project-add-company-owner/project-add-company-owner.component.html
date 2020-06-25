@@ -1,4 +1,5 @@
 <ngx-ui-loader></ngx-ui-loader>
+
 <body id="page-top">
 
     <!-- Page Wrapper -->
@@ -44,6 +45,10 @@
   
               <!-- Content Column -->
               <div class="col-lg-6 mb-4">
+
+                <div class="alert alert-danger"  *ngIf="isErreurValidProject">
+                  <strong>Erreur!</strong>  d'enregistrement
+                </div>               
 
                 <form   class="form-horizontal" #addProjectForm = "ngForm"  (ngSubmit)="onFormSubmitAddProject()">
 
@@ -101,6 +106,35 @@
 
                   </div>
 
+
+                  <div class="card mb-4 py-3 border-left-primary">
+
+                    <div class="card-body">
+
+                        <div class="form-group">
+
+                            <label>Categorie projet : </label>      
+                            
+                            <div class="controls">
+                             
+                              <select class="form-control"  [(ngModel)] = "ObjetProject.categorie_projectId" name="porte_project">
+                  
+                                      <option  value="">Selectionner categorie de projet</option>               
+                  
+                                      <option  [value]="categorie.id" *ngFor="let categorie of listCategorieProject" >{{categorie.nom}}</option>                                        
+                                     
+                              </select> 
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                  </div>
+
+
+
                   <div class="card mb-4 py-3 border-left-primary">
                     <div class="card-body">
                         <div class="form-group">
@@ -117,7 +151,7 @@
 
                         <mat-form-field  style=" background-color: white; color:#858796;width:100%">
     
-                         <input matInput [matDatepicker] = "picker" placeholder = "Date de naissance" (dateChange)=" addEventDateLimiteCollecte($event)"  name = "dateLimiteCollecte" required >
+                         <input matInput [matDatepicker] = "picker" placeholder = "Date d'expiration des collectes" (dateChange)=" addEventDateLimiteCollecte($event)"  name = "dateLimiteCollecte" required >
     
                          <mat-datepicker-toggle matSuffix [for] = "picker"></mat-datepicker-toggle>
     
@@ -134,11 +168,13 @@
 
                     <div class="card-body">
 
+                      <h5>Que pensez-vous proposer à vos contributeurs en contrepartie ?</h5><br>
+
                       <div class="form-group">
 
                         <div class="custom-control custom-radio">
       
-                          <input class="form-check-input" type="radio" value="1"  (click)="changeValue($event)" name="defaultCheck">
+                          <input class="form-check-input" type="radio"   (change)="handleChange('Du concret')" name="contrePartieProject">
 
                           <label class="form-check-label">Du concret</label> <br>
       
@@ -148,11 +184,31 @@
       
                         <div class="custom-control custom-radio mb-3">
       
-                          <input class="form-check-input"  type="radio" value="2" (click)="changeValue($event)" name="defaultCheck">
+                          <input class="form-check-input"    type="radio"  (change)="handleChange('Principalement du symbolique')" name="contrePartieProject">
       
                           <label class="form-check-label">Principalement du symbolique</label>  <br> 
       
                            <span>Des remerciements, des petits cadeaux sans valeur marchande etc.</span>
+      
+                        </div>
+
+                        <div class="custom-control custom-radio mb-3">
+      
+                          <input class="form-check-input"    type="radio"  (change)="handleChange('Pas de contrepartie')" name="contrePartieProject">
+      
+                          <label class="form-check-label">Pas de contrepartie</label>  <br> 
+      
+                           <span>Uniquement du don libre (avec ou sans défiscalisation)</span>
+      
+                        </div>
+
+                        <div class="custom-control custom-radio mb-3">
+      
+                          <input class="form-check-input"    type="radio"  (change)="handleChange('Je ne sais pas encore')" name="contrePartieProject">
+      
+                          <label class="form-check-label">Je ne sais pas encore</label>  <br> 
+      
+                           <span>Si votre projet est accepté, on vous aidera à définir vos contreparties</span>
       
                         </div>
                         
@@ -186,7 +242,134 @@
             
               <div class="col-lg-4 mb-4">
 
-     
+                 <!------------------------------------------------------------------------------>
+  
+
+                <div class="add-photo-container">
+                  <div class="card mb-4 py-3 border-left-primary">
+                    <div class="card-body">
+                      <mat-card class="add-photo-card">
+  
+                        <mat-card-header>
+    
+                          <mat-card-title>Affiche principale de projet</mat-card-title>
+    
+                        </mat-card-header>
+    
+                        <div class="row">
+
+                            <h5>Veuillez télécharger  l'affiche principale de projet </h5><br/><br/>
+
+                            <div class="col-lg-4 mb-4"   style="margin-left:10%;margin-top:10%">
+
+                              <img mat-card-image [src]="ObjetProject.afficheProject" alt="" style="margin-left:5%" > 
+
+                            </div>
+
+                        </div>
+  
+                        <div>
+  
+                          <table>
+  
+                                <tr>
+                                     <td>
+                                      <input    #imageAfficheInput   type="file"       (change)="imageInputChange(imageAfficheInput)"      accept="image/*" />
+  
+                                     </td>
+  
+                                     <td>
+                                     <!-- <button mat-raised-button color="blue" (click)="addImage()"><i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i> Modifier </button>-->
+  
+                                      <button class="btn btn-light btn-icon-split" (click)="addImageAfficheProject()">
+                                        <span class="icon text-gray-600">
+                                          <i class="fas fa-plus"></i>
+                                        </span>
+                                        <span class="text"> ajouter</span>
+                                      </button>
+                                     </td>
+  
+                                </tr>
+  
+                          </table>
+  
+                        
+                        </div>                      
+    
+                      </mat-card>
+
+                    </div>
+
+                  </div>
+    
+               </div>
+
+                 <!------------------------------------------------------------------------------>
+
+                 <div class="add-photo-container">
+
+                  <div class="card mb-4 py-3 border-left-primary">
+
+                    <div class="card-body">
+                      
+                      <mat-card class="add-photo-card">
+  
+                        <mat-card-header>
+    
+                          <mat-card-title>Images projects</mat-card-title>
+    
+                        </mat-card-header>
+    
+                        <div class="row">
+
+                            <h5>Associer d'autres images a votre projet:</h5><br/><br/>
+
+                            <div class="col-lg-4 mb-4"  *ngFor="let photo of photosProject" style="margin-left:10%;;margin-top:10%">
+
+                              <img mat-card-image [src]="photo.link" alt="" style="margin-left:5%" > 
+
+                            </div>
+
+                        </div>
+  
+                        <div>
+  
+                          <table>
+  
+                                <tr>
+                                     <td>
+                                      <input    #imageInput   type="file"       (change)="imageInputChange(imageInput)"      accept="image/*" />
+  
+                                     </td>
+  
+                                     <td>
+                                     <!-- <button mat-raised-button color="blue" (click)="addImage()"><i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i> Modifier </button>-->
+  
+                                      <button class="btn btn-light btn-icon-split" (click)="addImage()">
+                                        <span class="icon text-gray-600">
+                                          <i class="fas fa-plus"></i>
+                                        </span>
+                                        <span class="text"> ajouter</span>
+                                      </button>
+                                     </td>
+  
+                                </tr>
+  
+                          </table>
+  
+                        
+                        </div>                      
+    
+                      </mat-card>
+                      
+                    </div>
+
+                  </div>
+    
+                 </div>
+
+                <!------------------------------------------------------------------------------>
+
   
               </div>
           </div>

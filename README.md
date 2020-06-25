@@ -1,10 +1,10 @@
-            /******************************* commit : 1.0.1****************************************************/
+            /******************************* commit : 1.0.2****************************************************/
 
 Implementation des fonctionnalites suivantes :
 
-0. restructuration les templates de projet
+0. create composant add-project  && list-projects  (update)
 
-1.  create composant add-project  && list-projects  && show-project  &&  edit-project
+
 
 
 

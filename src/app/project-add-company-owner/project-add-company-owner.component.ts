@@ -18,7 +18,8 @@ export class ProjectAddCompanyOwnerComponent implements OnInit {
 
 @ViewChild('recaptcha', {static: true }) recaptchaElement: ElementRef;
 
-  public infosUser = {
+
+public infosUser = {
                      id : '',
                      nom: '',
                      prenom : '',
@@ -41,7 +42,10 @@ export class ProjectAddCompanyOwnerComponent implements OnInit {
                            montant_minimun : 0,
                            date_limite_collecte : '',
                            company_ownerId : '',
-                           contrePartieProject : ''
+                           contrePartieProject : '',
+                           afficheProject : 'http://placehold.it/500x325',
+                           statut_project : 0,
+                           categorie_projectId : 0
 
   };
 
@@ -49,9 +53,15 @@ export class ProjectAddCompanyOwnerComponent implements OnInit {
 
      public isErreurCaptcha = false;
 
-     favoriteSeason: string;
+     public photosProject = [];
 
-     seasons: string[] = ['Winter', 'Spring', 'Summer', 'Autumn'];
+     public imageFile: File;
+
+     public isErreurValidProject = false;
+
+     public comptImagesProject = 0;
+
+     public listCategorieProject = [];
 
      constructor(private router: Router, private cookie: CookieService, private apiService: apiHttpJsonService,
                  private imageService: ImageService, private ngxService: NgxUiLoaderService, private datePipe: DatePipe) {
@@ -73,7 +83,7 @@ export class ProjectAddCompanyOwnerComponent implements OnInit {
 
                   this.infosUser.photoUser = './assets/img/users/user_m.png';
 
- 
+
               }
 
            }else{
@@ -88,6 +98,10 @@ export class ProjectAddCompanyOwnerComponent implements OnInit {
   ngOnInit(): void {
 
     this.addRecaptchaScript();
+
+    this.getListCategorieProject();
+
+    this.photosProject.push({link : 'http://placehold.it/500x325', projectsCompanyOwnerId : ''});
   }
 
   addRecaptchaScript() {
@@ -126,15 +140,140 @@ export class ProjectAddCompanyOwnerComponent implements OnInit {
 
   }
 
-  changeValue(event){
+  handleChange(value){
 
-    console.log(event.value);
+    console.log(value);
+
+    this.ObjetProject.contrePartieProject = value;
+
+  }
+
+  addImageProject(objectImage){
+
+    this.apiService.addImageProject(objectImage).subscribe((data: any) => {
+
+      console.log('data-image-project', data);
+
+
+    }, (error: any) => {
+
+    });
+
+
   }
 
   onFormSubmitAddProject(){
 
+    if (this.isvalidCaptcha){
+
+      this.apiService.addProjectByCompanyOwner(this.ObjetProject).subscribe((data: any) => {
+
+        console.log(data.id);
+
+        this.ObjetProject.id = data.id;
+
+        if (this.photosProject.length > 0){
+
+             // tslint:disable-next-line:prefer-for-of
+             for (let index = 0; index < this.photosProject.length; index++) {
+
+                 this.photosProject[index].projectsCompanyOwnerId = data.id;
+
+                 this.addImageProject( this.photosProject[index]);
+             }
+        }
+
+        this.router.navigate(['/compangy_owner/projetcs']);
 
 
+       }, (error: any) => {
+
+      });
+
+    }
+
+  }
+
+  imageInputChange(imageInput: any) {
+
+    this.imageFile = imageInput.files[0];
+
+  }
+
+  addImage() {
+
+    this.ngxService.start();
+
+    const infoObjectphotos = {
+                      title: 'images_project',
+                      description:  'images_project'
+                    };
+
+
+
+    this.imageService.uploadImage(this.imageFile, infoObjectphotos).then((imageData: any) => {
+
+      console.log(imageData.data.link);
+
+      const objectPhoto = {
+                          link : imageData.data.link,
+                          projectsCompanyOwnerId : ''
+      };
+
+      if(this.comptImagesProject === 0){
+
+        this.photosProject = [];
+
+      }
+
+      this.photosProject.push(objectPhoto);
+
+      this.comptImagesProject++;
+
+      this.ngxService.stop();
+
+
+     });
+
+  }
+  
+
+  addImageAfficheProject(){
+
+    this.ngxService.start();
+
+    const infoObjectphotos = {
+                      title: 'image_affiche_project',
+                      description:  'image_affiche_project'
+            };
+
+
+
+    this.imageService.uploadImage(this.imageFile, infoObjectphotos).then((imageData: any) => {
+
+      console.log(imageData.data.link);
+
+      this.ObjetProject.afficheProject = imageData.data.link;
+
+      this.ngxService.stop();
+
+
+     });
+
+  }
+
+  getListCategorieProject(){
+
+    this.apiService.getListCategorieProject().subscribe((data: any) => {
+
+      console.log(data);
+
+      this.listCategorieProject = data;
+      
+
+     }, (error: any) => {
+
+    });
 
   }
 

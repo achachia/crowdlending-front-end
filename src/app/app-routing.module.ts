@@ -17,8 +17,8 @@ const routes: Routes = [
   { path: 'profilUser', component: ProfilUserComponent},
   { path: 'compangy_owner/projetcs', component: ProjectsListCompanyOwnerComponent},
   { path: 'compangy_owner/projetcs/add', component: ProjectAddCompanyOwnerComponent},
-  { path: 'compangy_owner/projetc/:id', component: ProjectShowCompanyOwnerComponent},
-  { path: 'compangy_owner/projetc/:id/edit', component: ProjectEditCompanyOwnerComponent}
+  { path: 'compangy_owner/projetcs/show/:id', component: ProjectShowCompanyOwnerComponent},
+  { path: 'compangy_owner/projetcs/edit/:id', component: ProjectEditCompanyOwnerComponent}
 ];
 
 @NgModule({
