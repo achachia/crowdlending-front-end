@@ -143,9 +143,14 @@ public infosUser = {
 
   removeAdressWeb(index){
 
-    this.adressReseauxSociauxProject.splice(index, 1);
+    if (confirm('Vous ete sure de supprimer ladresse ')) {
 
-    this.ObjetProject.adressReseauxSociauxProject = this.adressReseauxSociauxProject;
+      this.adressReseauxSociauxProject.splice(index, 1);
+
+      this.ObjetProject.adressReseauxSociauxProject = this.adressReseauxSociauxProject;
+
+    }
+
 
   }
 
@@ -181,7 +186,7 @@ public infosUser = {
   addEventDateLimiteCollecte(event){
 
 
-    this.ObjetProject.date_limite_collecte = this.datePipe.transform(event.value, 'dd-MM-yyyy');
+    this.ObjetProject.date_limite_collecte = this.datePipe.transform(event.value, 'yyyy-MM-dd');
 
   }
 

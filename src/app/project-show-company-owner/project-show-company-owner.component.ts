@@ -14,7 +14,7 @@ declare var window: any;
 })
 export class ProjectShowCompanyOwnerComponent implements OnInit {
 
-  @ViewChild('recaptcha', {static: true }) recaptchaElement: ElementRef;
+  // @ViewChild('recaptcha', {static: true }) recaptchaElement: ElementRef;
 
   public infosUser = {
                      id : '',
@@ -66,7 +66,7 @@ export class ProjectShowCompanyOwnerComponent implements OnInit {
 
 ngOnInit(): void {
 
-  this.addRecaptchaScript(); 
+  // this.addRecaptchaScript(); 
 
 }
 

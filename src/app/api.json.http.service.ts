@@ -11,7 +11,7 @@ export class apiHttpJsonService {
 
   private apiUrlLocal = 'http://localhost:3000';
 
-  private apiUrlCloud = 'http://localhost:3000';  // https://json-server-growdlending.herokuapp.com
+  private apiUrlCloud = 'https://json-server-growdlending.herokuapp.com';  // https://json-server-growdlending.herokuapp.com
 
   constructor(private http: HttpClient) { }
 
@@ -224,9 +224,9 @@ export class apiHttpJsonService {
 
   }
 
-  listProjectByCompanyOwner(){
+  listProjectByCompanyOwner(company_ownerId){
 
-    const url = this.apiUrlCloud + '/projectsCompanyOwner';
+    const url = this.apiUrlCloud + '/projectsCompanyOwner?company_ownerId=' + company_ownerId;
 
     return this.http.get(url);
 
@@ -238,6 +238,43 @@ export class apiHttpJsonService {
     const url = this.apiUrlCloud + '/categorie_project';
 
     return this.http.get(url);
+
+
+  }
+
+  getCategorieProject(idCategorieProject){
+
+    const url = this.apiUrlCloud + '/categorie_project/' + idCategorieProject;
+
+    return this.http.get(url);
+
+
+  }
+
+  getAllImagesByIdProject(idProject){
+
+
+    const url = this.apiUrlCloud + '/imagesProjects?projectsCompanyOwnerId=' + idProject;
+
+    return this.http.get(url);
+
+
+  }
+
+  deleteImagesByProject(idImage){
+
+    const url = this.apiUrlCloud + '/imagesProjects/' + idImage;
+
+    return this.http.delete(url);
+
+
+  }
+
+  deleteProject(idProject){
+
+    const url = this.apiUrlCloud + '/projectsCompanyOwner/' + idProject;
+
+    return this.http.delete(url);
 
 
   }
