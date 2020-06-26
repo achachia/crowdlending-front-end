@@ -370,6 +370,119 @@
 
                 <!------------------------------------------------------------------------------>
 
+
+                <div class="add-photo-container">
+
+                  <div class="card mb-4 py-3 border-left-primary">
+
+                    <div class="card-body">
+                      
+                      <mat-card class="add-photo-card">
+  
+                        <mat-card-header>
+    
+                          <mat-card-title>LES RESEAUX SOCIAUX</mat-card-title>
+    
+                        </mat-card-header>
+    
+                        <div class="row" style="margin-bottom:10%">
+
+                            <h5>Associer les liens des reseaux socizux à votre projet:</h5><br/><br/>
+
+                            <div class="row" *ngFor="let adress of adressReseauxSociauxProject; let i = index">
+
+                              <div class="col-lg-12 mb-12"   style="margin-left:10%;;margin-top:10%">
+
+                                <h6 *ngIf="adress.keyMedia === 'num_tel'"><i  class="fa fa-phone"></i>{{adress.valueMedia}} : </h6> 
+
+                                <h6 *ngIf="adress.keyMedia === 'link_facbook'"><i  class="fa fa-facebook"></i>{{adress.valueMedia}} : </h6> 
+
+                                <h6 *ngIf="adress.keyMedia === 'site_internet'"><i  class="fa fa-edge"></i>{{adress.valueMedia}} : </h6> 
+
+                                <h6 *ngIf="adress.keyMedia === 'link_youtube'"><i  class="fa fa-youtube"></i>{{adress.valueMedia}} : </h6> 
+
+                                <h6 *ngIf="adress.keyMedia === 'link_google_plus'"><i  class="fa fa-google-plus"></i>{{adress.valueMedia}} : </h6> 
+
+                                <h6 *ngIf="adress.keyMedia === 'link_twitter'"><i  class="fa fa-twitter"></i>{{adress.valueMedia}} : </h6> 
+  
+                              </div>
+
+                              <div class="col-lg-12 mb-12"   style="margin-left:10%;;margin-top:10%">
+
+                                <h6> {{adress.linkProject}}</h6> 
+  
+                              </div>
+
+                              <div class="col-lg-12 mb-12"   style="margin-left:10%;;margin-top:10%">
+
+                                <button  class="btn btn-danger"   style="margin-left :5%" (click)="removeAdressWeb(i)" >Supprimer</button>
+  
+                              </div>
+
+                            </div>
+
+                           
+
+                        </div>
+  
+                        <div>
+
+                          <div class="row">
+
+                            <div class="col-lg-12 mb-12">
+
+                              <div class="controls">
+                             
+                                <select class="form-control"  [(ngModel)] = "typeMediaWeb" name="typeMediaWeb">
+                    
+                                        <option  value="">Selectionner votre type media</option>               
+                    
+                                        <option  [value]="media.key" *ngFor="let media of listCanalMedia" >{{media.value}}</option>                                        
+                                       
+                                </select> 
+  
+                              </div>
+
+                            </div>
+
+                            <div class="col-lg-12 mb-12" style="margin-top:5%">
+
+                              <input type="text" class="form-control" [(ngModel)] = "linkProject" name = "objectLink" placeholder=""   />
+
+
+                            </div>
+
+                            <div class="col-lg-12 mb-12" style="margin-top:5%">
+
+                              <button class="btn btn-light btn-icon-split" (click)="addAdressWeb()">
+                                <span class="icon text-gray-600">
+                                  <i class="fas fa-plus"></i>
+                                </span>
+                                <span class="text"> ajouter</span>
+                              </button>
+
+                            </div>
+
+                          </div>
+                         
+  
+                        
+                        </div>                      
+    
+                      </mat-card>
+                      
+                    </div>
+
+                  </div>
+    
+                 </div>
+
+
+
+
+
+                <!------------------------------------------------------------------------------>
+
   
               </div>
           </div>

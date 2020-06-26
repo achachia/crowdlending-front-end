@@ -1,8 +1,8 @@
-            /******************************* commit : 1.0.2****************************************************/
+            /******************************* commit : 1.0.4****************************************************/
 
 Implementation des fonctionnalites suivantes :
 
-0. create composant add-project  && list-projects  (update)
+0. update composant add-project  (update)(ajout les liens reseaux sociaux)
 
 
 

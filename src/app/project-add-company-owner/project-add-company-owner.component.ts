@@ -45,7 +45,8 @@ public infosUser = {
                            contrePartieProject : '',
                            afficheProject : 'http://placehold.it/500x325',
                            statut_project : 0,
-                           categorie_projectId : 0
+                           categorie_projectId : 0,
+                           adressReseauxSociauxProject : []
 
   };
 
@@ -62,6 +63,23 @@ public infosUser = {
      public comptImagesProject = 0;
 
      public listCategorieProject = [];
+
+     public adressReseauxSociauxProject = [];
+
+     public typeMediaWeb: any = '';
+
+     public listCanalMedia = [
+
+                             {key: 'site_internet/Site internet', value: 'Site internet'},
+                             {key: 'link_google_plus/Google plus', value: 'Google plus'},
+                             {key: 'link_facbook/Face-book', value: 'Face-book'},
+                             {key: 'link_youtube/Youtube', value: 'Youtube'},
+                             {key: 'link_twitter/Twitter', value: 'Twitter'},
+                             {key: 'num_tel/Numero téléphone', value: 'Numero téléphone'},
+
+     ];
+
+     public linkProject = '';
 
      constructor(private router: Router, private cookie: CookieService, private apiService: apiHttpJsonService,
                  private imageService: ImageService, private ngxService: NgxUiLoaderService, private datePipe: DatePipe) {
@@ -102,6 +120,33 @@ public infosUser = {
     this.getListCategorieProject();
 
     this.photosProject.push({link : 'http://placehold.it/500x325', projectsCompanyOwnerId : ''});
+  }
+
+  addAdressWeb(){
+
+    const arrayMedia = this.typeMediaWeb.split('/');
+
+    const objectLinkMedia = {
+
+                             keyMedia : arrayMedia[0],
+                             valueMedia : arrayMedia[1],
+                             linkProject : this.linkProject
+    };
+
+    this.adressReseauxSociauxProject.push(objectLinkMedia);
+
+    this.ObjetProject.adressReseauxSociauxProject = this.adressReseauxSociauxProject;
+
+    console.log(objectLinkMedia);
+
+  }
+
+  removeAdressWeb(index){
+
+    this.adressReseauxSociauxProject.splice(index, 1);
+
+    this.ObjetProject.adressReseauxSociauxProject = this.adressReseauxSociauxProject;
+
   }
 
   addRecaptchaScript() {
@@ -220,7 +265,7 @@ public infosUser = {
                           projectsCompanyOwnerId : ''
       };
 
-      if(this.comptImagesProject === 0){
+      if (this.comptImagesProject === 0){
 
         this.photosProject = [];
 
@@ -236,7 +281,7 @@ public infosUser = {
      });
 
   }
-  
+
 
   addImageAfficheProject(){
 
@@ -269,7 +314,7 @@ public infosUser = {
       console.log(data);
 
       this.listCategorieProject = data;
-      
+
 
      }, (error: any) => {
 
