@@ -14,7 +14,6 @@ declare var window: any;
 })
 export class ProjectShowCompanyOwnerComponent implements OnInit {
 
-  // @ViewChild('recaptcha', {static: true }) recaptchaElement: ElementRef;
 
   public infosUser = {
                      id : '',
@@ -64,39 +63,8 @@ export class ProjectShowCompanyOwnerComponent implements OnInit {
 
        }
 
-ngOnInit(): void {
+ngOnInit(): void { }
 
-  // this.addRecaptchaScript(); 
 
-}
-
-addRecaptchaScript() {
-
-  window.grecaptchaCallback = () => {
-    this.renderReCaptcha();
-  };
-
-  (function(d, s, id, obj){
-    let js, fjs = d.getElementsByTagName(s)[0];
-    if (d.getElementById(id)) { obj.renderReCaptcha(); return; }
-    js = d.createElement(s); js.id = id;
-    js.src = 'https://www.google.com/recaptcha/api.js?onload=grecaptchaCallback&amp;render=explicit';
-    fjs.parentNode.insertBefore(js, fjs);
-  }(document, 'script', 'recaptcha-jssdk', this));
-
-}
-
-renderReCaptcha() {
-  window.grecaptcha.render(this.recaptchaElement.nativeElement, {
-    sitekey : '6Lf4I6gZAAAAAMp1E9YI1FJghdQ20CNRtAV9d55y',
-    callback: (response) => {
-        console.log('response', response);
-
-        this.isvalidCaptcha = true;
-
-        this.isErreurCaptcha = false;
-    }
-  });
- }
 
 }

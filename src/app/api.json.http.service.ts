@@ -279,5 +279,14 @@ export class apiHttpJsonService {
 
   }
 
+  listAllProjects(){
+
+    const url = this.apiUrlCloud + '/projectsCompanyOwner';
+
+    return this.http.get(url);
+
+
+  }
+
 
 }
