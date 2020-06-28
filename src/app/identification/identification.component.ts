@@ -96,7 +96,9 @@ export class IdentificationComponent implements OnInit {
 
          this.cities = data;
 
-         this.cities.sort((c1, c2) => c1.date_created - c2.date_created).map(city => console.log(city.id + ':'  + ':' + city.date_created));
+        // this.cities.sort((c1, c2) => c1.date_created - c2.date_created).map(city => console.log(city.id + ':'  + ':' + city.date_created));
+
+         console.log(this.cities.sort((c1, c2) => c1.date_created - c2.date_created));
 
 
          }, (error: any) => {
