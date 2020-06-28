@@ -19,10 +19,14 @@ import { AppComponent } from './app.component';
 import { AccueilComponent } from './accueil/accueil.component';
 import { IdentificationComponent } from './identification/identification.component';
 import { ProfilUserComponent } from './profil-user/profil-user.component';
+
 import { ProjectAddCompanyOwnerComponent } from './project-add-company-owner/project-add-company-owner.component';
 import { ProjectsListCompanyOwnerComponent } from './projects-list-company-owner/projects-list-company-owner.component';
 import { ProjectEditCompanyOwnerComponent } from './project-edit-company-owner/project-edit-company-owner.component';
 import { ProjectShowCompanyOwnerComponent } from './project-show-company-owner/project-show-company-owner.component';
+
+import { ProjectsListAdminComponent } from './projects-list-admin/projects-list-admin.component';
+import { ProjectShowAdminComponent } from './project-show-admin/project-show-admin.component';
 
 import { NavTemplatesCompantOwnerComponent } from './templates/company_owner/nav-templates/nav-templates.component';
 import { SideBarLeftTemplatesCompantOwnerComponent } from './templates/company_owner/side-bar-left-templates/side-bar-left-templates.component';
@@ -35,6 +39,25 @@ import { FooterTemplatesInvestorComponent } from './templates/investor/footer-te
 import { NavTemplatesAdministratorComponent } from './templates/administrator/nav-templates/nav-templates.component';
 import { SideBarLeftTemplatesAdministratorComponent } from './templates/administrator/side-bar-left-templates/side-bar-left-templates.component';
 import { FooterTemplatesAdministratorComponent } from './templates/administrator/footer-templates/footer-templates.component';
+
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+
+import { MatDateFormats, MAT_DATE_LOCALE, MAT_DATE_FORMATS } from '@angular/material/core';
+
+import { EditorModule } from '@tinymce/tinymce-angular';
+
+export const MY_FORMAT: MatDateFormats = {
+                                        parse: {
+                                                dateInput: 'DD/MM/YYYY',
+                                               },
+                                        display: {
+                                                dateInput: 'DD/MM/YYYY',
+                                                monthYearLabel: 'MMM YYYY',
+                                                dateA11yLabel: 'DD/MM/YYYY',
+                                                monthYearA11yLabel: 'MMMM YYYY',
+                                         },
+                                  };
+
 
 
 @NgModule({
@@ -56,6 +79,8 @@ import { FooterTemplatesAdministratorComponent } from './templates/administrator
     NavTemplatesAdministratorComponent,
     SideBarLeftTemplatesAdministratorComponent,
     FooterTemplatesAdministratorComponent,
+    ProjectsListAdminComponent,
+    ProjectShowAdminComponent,
 
   ],
   imports: [
@@ -67,13 +92,18 @@ import { FooterTemplatesAdministratorComponent } from './templates/administrator
     MaterialModule,
     NoopAnimationsModule,
     BrowserAnimationsModule,
-    NgxUiLoaderModule
+    NgxUiLoaderModule,
+    NgbModule,
+    EditorModule
 
   ],
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA
   ],
-  providers: [CookieService, apiHttpJsonService,ImageService,DatePipe],
+  providers: [CookieService, apiHttpJsonService,ImageService,DatePipe,
+             { provide: MAT_DATE_LOCALE, useValue: 'fr-FR' },
+             { provide: MAT_DATE_FORMATS, useValue: MY_FORMAT }
+             ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

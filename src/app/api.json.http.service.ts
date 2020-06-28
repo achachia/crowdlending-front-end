@@ -11,7 +11,7 @@ export class apiHttpJsonService {
 
   private apiUrlLocal = 'http://localhost:3000';
 
-  private apiUrlCloud = 'https://json-server-growdlending.herokuapp.com';  // https://json-server-growdlending.herokuapp.com
+  private apiUrlCloud = 'http://localhost:3000';  // https://json-server-growdlending.herokuapp.com
 
   constructor(private http: HttpClient) { }
 
@@ -230,7 +230,6 @@ export class apiHttpJsonService {
 
     return this.http.get(url);
 
-
   }
 
   getListCategorieProject(){
@@ -239,7 +238,6 @@ export class apiHttpJsonService {
 
     return this.http.get(url);
 
-
   }
 
   getCategorieProject(idCategorieProject){
@@ -247,8 +245,6 @@ export class apiHttpJsonService {
     const url = this.apiUrlCloud + '/categorie_project/' + idCategorieProject;
 
     return this.http.get(url);
-
-
   }
 
   getAllImagesByIdProject(idProject){
@@ -257,8 +253,6 @@ export class apiHttpJsonService {
     const url = this.apiUrlCloud + '/imagesProjects?projectsCompanyOwnerId=' + idProject;
 
     return this.http.get(url);
-
-
   }
 
   deleteImagesByProject(idImage){
@@ -266,8 +260,6 @@ export class apiHttpJsonService {
     const url = this.apiUrlCloud + '/imagesProjects/' + idImage;
 
     return this.http.delete(url);
-
-
   }
 
   deleteProject(idProject){
@@ -275,7 +267,6 @@ export class apiHttpJsonService {
     const url = this.apiUrlCloud + '/projectsCompanyOwner/' + idProject;
 
     return this.http.delete(url);
-
 
   }
 
@@ -285,8 +276,48 @@ export class apiHttpJsonService {
 
     return this.http.get(url);
 
+  }
+
+  getProjectById(idProject){
+
+    const url = this.apiUrlCloud + '/projectsCompanyOwner/' + idProject;
+
+    return this.http.get(url);
 
   }
+
+  getPorteProjectById(idPorteProject){
+
+    const url = this.apiUrlCloud + '/portes_project/' + idPorteProject;
+
+    return this.http.get(url);
+
+  }
+
+  getInfosCompanyOwner(idCompanyOwner){
+
+    const url = this.apiUrlCloud + '/company_owner/' + idCompanyOwner;
+
+    return this.http.get(url);
+
+  }
+
+  updateDataProjet(objectUpdateProject){
+
+
+   const  url = this.apiUrlCloud + '/projectsCompanyOwner/' + objectUpdateProject.id ;
+
+   return this.http.put(url, objectUpdateProject);
+
+   }
+
+   getListQuestionReponses(){
+
+    const url = this.apiUrlCloud + '/questionsAide';
+
+    return this.http.get(url);
+
+   }
 
 
 }

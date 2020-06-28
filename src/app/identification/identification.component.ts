@@ -70,6 +70,8 @@ export class IdentificationComponent implements OnInit {
 
   events: string[] = [];
 
+  public cities = [];
+
   constructor(private route: ActivatedRoute, private router: Router, private apiService: apiHttpJsonService,
               private cookie: CookieService, private datePipe: DatePipe, private ngxService: NgxUiLoaderService) {
 
@@ -83,6 +85,35 @@ export class IdentificationComponent implements OnInit {
   }
 
   ngOnInit(): void {
+
+    
+
+    this.apiService.getListQuestionReponses().subscribe((data: any) => {
+
+         // console.log(data);
+
+        
+
+         this.cities = data;
+
+         this.cities.sort((c1, c2) => c1.date_created - c2.date_created).map(city => console.log(city.id + ':'  + ':' + city.date_created));
+
+
+         }, (error: any) => {
+
+     });
+
+    /********************************************************** */
+
+    // Date.now()
+
+    
+
+    
+
+    
+
+    /********************************************************* */
 
     this.addRecaptchaScript();
 
@@ -98,6 +129,8 @@ export class IdentificationComponent implements OnInit {
                                                second : 'numeric',
 
                      });
+
+
 
    }
 
