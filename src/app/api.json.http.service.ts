@@ -278,6 +278,16 @@ export class apiHttpJsonService {
 
   }
 
+  listAllProjectsFromVisitor(){
+
+    // liste des projects valid
+
+    const url = this.apiUrlCloud + '/projectsCompanyOwner?valid_project=1';
+
+    return this.http.get(url);
+
+  }
+
   getProjectById(idProject){
 
     const url = this.apiUrlCloud + '/projectsCompanyOwner/' + idProject;
@@ -311,13 +321,65 @@ export class apiHttpJsonService {
 
    }
 
-   getListQuestionReponses(){
+   getListQuestionReponsesByAdmin(idAdmin, idCompanyOwner, idProject){
 
-    const url = this.apiUrlCloud + '/questionsAide';
+    // liste des commaitaires envoye par admin vers company-owner
+    
+    const url = this.apiUrlCloud + '/questionsAide?destId=' + idCompanyOwner + '&expdId=' + idAdmin + '&idProject=' + idProject + '&typeComtpteExp=admin&typeCompteDest=company_owner' ;
 
     return this.http.get(url);
 
    }
 
+   getListQuestionReponsesByCompanyOwner(idCompanyOwner, idAdmin, idProject){
 
+    // liste des commaitaires envoye par company-owner vers admin
+
+    const url = this.apiUrlCloud + '/questionsAide?destId=' + idAdmin + '&expdId=' + idCompanyOwner + '&idProject=' + idProject + '&typeComtpteExp=company_owner&typeCompteDest=admin' ;
+
+
+    return this.http.get(url);
+
+   }
+
+   getListQuestionReponsesByInvestorForCompanyOwner(idInvestor, idCompanyOwner, idProject){
+
+    // liste des commaitaires envoye par admin vers company-owner
+    
+    const url = this.apiUrlCloud + '/questionsAide?destId=' + idCompanyOwner + '&expdId=' + idInvestor + '&idProject=' + idProject + '&typeComtpteExp=investor&typeCompteDest=company_owner' ;
+
+    return this.http.get(url);
+
+   }
+
+   getListQuestionReponsesByCompanyOwnerForInvestor(idCompanyOwner, idInvestor, idProject){
+
+    // liste des commaitaires envoye par company-owner vers admin
+
+    const url = this.apiUrlCloud + '/questionsAide?destId=' + idInvestor + '&expdId=' + idCompanyOwner + '&idProject=' + idProject + '&typeComtpteExp=company_owner&typeCompteDest=nvestor' ;
+
+
+    return this.http.get(url);
+
+   }
+
+   saveQuestionReponsesByCompanyOwner(objectQuestion){
+
+    const url = this.apiUrlCloud + '/questionsAide' ;
+
+
+    return this.http.post(url,objectQuestion);
+
+
+   }
+
+   saveQuestionReponsesByAdmin(objectQuestion){
+
+    const url = this.apiUrlCloud + '/questionsAide' ;
+
+
+    return this.http.post(url,objectQuestion);
+
+
+   }
 }

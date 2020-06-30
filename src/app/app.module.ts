@@ -25,6 +25,10 @@ import { ProjectsListCompanyOwnerComponent } from './projects-list-company-owner
 import { ProjectEditCompanyOwnerComponent } from './project-edit-company-owner/project-edit-company-owner.component';
 import { ProjectShowCompanyOwnerComponent } from './project-show-company-owner/project-show-company-owner.component';
 
+import { ProjectListInvestorComponent } from './project-list-investor/project-list-investor.component';
+import { ProjectInvestListInvestorComponent } from './project-invest-list-investor/project-invest-list-investor.component';
+import { ProjectShowInvestorComponent } from './project-show-investor/project-show-investor.component';
+
 import { ProjectsListAdminComponent } from './projects-list-admin/projects-list-admin.component';
 import { ProjectShowAdminComponent } from './project-show-admin/project-show-admin.component';
 
@@ -44,7 +48,10 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { MatDateFormats, MAT_DATE_LOCALE, MAT_DATE_FORMATS } from '@angular/material/core';
 
-import { EditorModule } from '@tinymce/tinymce-angular';
+
+
+
+
 
 export const MY_FORMAT: MatDateFormats = {
                                         parse: {
@@ -81,6 +88,9 @@ export const MY_FORMAT: MatDateFormats = {
     FooterTemplatesAdministratorComponent,
     ProjectsListAdminComponent,
     ProjectShowAdminComponent,
+    ProjectListInvestorComponent,
+    ProjectInvestListInvestorComponent,
+    ProjectShowInvestorComponent,
 
   ],
   imports: [
@@ -94,7 +104,8 @@ export const MY_FORMAT: MatDateFormats = {
     BrowserAnimationsModule,
     NgxUiLoaderModule,
     NgbModule,
-    EditorModule
+  
+    
 
   ],
   schemas: [

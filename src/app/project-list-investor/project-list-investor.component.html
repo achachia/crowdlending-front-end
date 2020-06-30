@@ -38,7 +38,7 @@
             <!-- Page Heading -->
             <div class="d-sm-flex align-items-center justify-content-between mb-4">
               <h1 class="h3 mb-0 text-gray-800">LES PROJETS</h1>
-              <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm" routerLink="/compangy_owner/projetcs/add"   routerLinkActive="active"><i class="fas fa-download fa-sm text-white-50"></i> Lancer un projet</a>
+             
             </div>
   
           
@@ -50,22 +50,19 @@
                 <div class="row text-center">
   
                   <div class="col-lg-3 col-md-6 mb-4"  *ngFor="let project of listProjects; let i = index ">
-                    <div class="card h-100" [routerLink]="['/compangy_owner/my_projetcs/show' , project.id ]">
-                      <img class="card-img-top" [src]="project.afficheProject" alt="" style="width :300px;height:200px;margin-left:20%;">
+                    <div class="card h-100">
+                      <img class="card-img-top" [src]="project.afficheProject" alt="" [routerLink]="['/investor/projetcs/show' , project.id ]"  style="width :300px;height:200px;margin-left:20%;">
                       <div class="card-body">
-                        <h4 class="card-title">{{project.nom}}</h4>                     
-                        <h5 class="card-title">{{project.statut_project}}</h5>
+                        <h4 class="card-title">{{project.nom}}</h4>               
                         <h5 class="card-title"  *ngIf="project.statut_project === 'Validé'">{{project.nbrJoursRestant}}</h5>
                         <h5 class="card-title">{{project.date_limite_collecte}}</h5>
                         <h5 class="card-title">{{project.categorie_project}}</h5>
                       </div>
                       <div class="card-footer">
 
-                        <a  class="btn btn-primary" [routerLink]="['/compangy_owner/my_projetcs/show' , project.id ]"   >Consulter</a>
+                        <a  class="btn btn-primary" [routerLink]="['/admin/projetcs/show' , project.id ]">Consulter</a> 
 
-                        <a  class="btn btn-success" [routerLink]="['/compangy_owner/my_projetcs/edit' , project.id ]"  style="margin-left :5%" >Editer</a>
-
-                        <button  class="btn btn-danger"    style="margin-left :5%" (click)="removeProject(i)">Supprimer</button>                  
+                           
                         
                       </div>
 
@@ -133,6 +130,8 @@
   
   
   
+
+
 
 
 

@@ -45,8 +45,10 @@ public infosUser = {
                            contrePartieProject : '',
                            afficheProject : 'http://placehold.it/500x325',
                            statut_project : 0,
+                           valid_project : 0,
                            categorie_projectId : 0,
-                           adressReseauxSociauxProject : []
+                           adressReseauxSociauxProject : [],
+                           idManager: ''
 
   };
 

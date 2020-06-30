@@ -95,7 +95,7 @@ getListProjects(companyOwnerId){
 
     const diff = this.dateDiff(date1, date2);
 
-    this.listProjects[indexProject].nbrJoursRestant = 'moins de ' + diff.day + ' jours';
+    this.listProjects[indexProject].nbrJoursRestant = 'J-' + diff.day;
 
      // tslint:disable-next-line:max-line-length
      //  console.log('Entre le ' + date1.toString() + ' et ' + date2.toString() + ' il y a ' + diff.day + ' jours, ' + diff.hour + ' heures, ' + diff.min + ' minutes et ' + diff.sec + ' secondes');

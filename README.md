@@ -1,10 +1,10 @@
-            /******************************* commit : 1.0.7****************************************************/
+            /******************************* commit : 1.0.8****************************************************/
 
 Implementation des fonctionnalites suivantes :
 
-0. installation module tinymce-angular  : npm install --save @tinymce/tinymce-angular  (en mode test)
+1. systeme des questions && reponses (update)(composant-admin-show-company)
 
-1. systeme des questions && reponses (mode-test)(composant-admin-show-company)
+2. craete composant all-shows-projects investor
  
 
 

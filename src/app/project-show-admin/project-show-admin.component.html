@@ -172,7 +172,7 @@
 
                         <div class="col-lg-4">
 
-                            <div class="col-lg-12">
+                            <div class="col-lg-12" *ngIf="ObjetProjectTemplate.idManager==infosUser.id">
 
                                 <div class="card mb-12 py-12 border-left-primary">
 
@@ -268,7 +268,7 @@
                     </ngb-tab> 
                     
                     <ngb-tab>
-                        <ng-template ngbTabTitle>Porteur de projet</ng-template>
+                        <ng-template ngbTabTitle>Images de projet</ng-template>
                         <ng-template ngbTabContent>
   
                            <div class="row" style="margin-top:10%">
@@ -331,56 +331,51 @@
 
                       <ngb-tab>
 
-                        <ng-template ngbTabTitle>Questions & Réponses</ng-template>
+                        <ng-template ngbTabTitle>Questions & Réponses/Porteur de projet</ng-template>
 
                         <ng-template ngbTabContent>
   
-                          <div class="comments">
+                          <div class="comments" style="margin-top:5%;margin-left:5%;">
                             <div class="comment-wrap">
                                 <div class="photo">
-                                    <div class="avatar" style="background-image: url('https://s3.amazonaws.com/uifaces/faces/twitter/dancounsell/128.jpg')"></div>
+                                    <div class="avatar" style="background-image: url('{{infosUser.photoUser}}')"></div>
                                 </div>
                                 <div class="comment-block">
-                                    <form action="">
-                                        <textarea name="" id="" cols="30" rows="3" placeholder="Add comment..."></textarea>
+                                    <form action="" #questionFormForCompanyOwner = "ngForm"  (ngSubmit)="onFormSubmitQuestionForCompanyOwner()">
+
+                                      <textarea name="" id="" cols="60" rows="3" placeholder="Rédiger votre question..." [(ngModel)] = "ObjetAideForCompanyOwner.body_aide" name="question"></textarea>
+
+                                      <div class="form-group" style="margin-top:5%;">
+
+                                        <button type="submit" class="btn btn-primary" [disabled]="!questionFormForCompanyOwner.form.valid">Envoyer</button>
+
+                                    </div>
 
                                        <!-- <editor  apiKey="qagffr3pkuv17a8on1afax661irst1hbr4e6tbv888sz91jc"    class="mat-elevation-z1"     (onInit)="handleEditorInit($event)"   [init]="{  icons: 'material', skin: 'borderless', plugins: 'wordcount', menubar: false, min_height: 150  }"  ></editor>-->
                                     </form>
                                 </div>
                             </div>
                         
-                            <div class="comment-wrap">
-                                <div class="photo">
-                                    <div class="avatar" style="background-image: url('https://s3.amazonaws.com/uifaces/faces/twitter/jsa/128.jpg')"></div>
+                            <div class="comment-wrap"  *ngFor="let objectquestion of listQuestionsAidesForCompanyOwner; let i = index ">
+
+                              <div class="photo">
+        
+                                <div *ngIf="objectquestion.typeComtpteExp == 'company_owner'" class="avatar"   style="background-image: url('{{companyOwner.photoUser }}')"> </div>
+        
+                                <div *ngIf="objectquestion.typeComtpteExp == 'admin'" class="avatar"   style="background-image: url('{{ infosUser.photoUser }}')"> </div>
+                              </div>
+                              <div class="comment-block">
+                                <p class="comment-text">{{objectquestion.body_aide}}</p>
+                                <div class="bottom-comment">
+                                  <div class="comment-date">{{objectquestion.date_created}}</div>
+                                <!--    <ul class="comment-actions">
+                                  <li class="complain">Complain</li>
+                                    <li class="reply">Reply</li>
+                                  </ul>-->
                                 </div>
-                                <div class="comment-block">
-                                    <p class="comment-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iusto temporibus iste nostrum dolorem natus recusandae incidunt voluptatum. Eligendi voluptatum ducimus architecto tempore, quaerat explicabo veniam fuga corporis totam reprehenderit quasi
-                                        sapiente modi tempora at perspiciatis mollitia, dolores voluptate. Cumque, corrupti?</p>
-                                    <div class="bottom-comment">
-                                        <div class="comment-date">Aug 24, 2014 @ 2:35 PM</div>
-                                        <ul class="comment-actions">
-                                            <li class="complain">Complain</li>
-                                            <li class="reply">Reply</li>
-                                        </ul>
-                                    </div>
-                                </div>
+                              </div>
                             </div>
-                        
-                            <div class="comment-wrap">
-                                <div class="photo">
-                                    <div class="avatar" style="background-image: url('https://s3.amazonaws.com/uifaces/faces/twitter/felipenogs/128.jpg')"></div>
-                                </div>
-                                <div class="comment-block">
-                                    <p class="comment-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iusto temporibus iste nostrum dolorem natus recusandae incidunt voluptatum. Eligendi voluptatum ducimus architecto tempore, quaerat explicabo veniam fuga corporis totam.</p>
-                                    <div class="bottom-comment">
-                                        <div class="comment-date">Aug 23, 2014 @ 10:32 AM</div>
-                                        <ul class="comment-actions">
-                                            <li class="complain">Complain</li>
-                                            <li class="reply">Reply</li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
+
                         </div>
                         
                       
