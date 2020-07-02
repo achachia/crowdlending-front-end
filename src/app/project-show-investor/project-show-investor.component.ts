@@ -6,7 +6,7 @@ import { NgxUiLoaderService } from 'ngx-ui-loader';
 import { DatePipe } from '@angular/common';
 import { DomSanitizer } from '@angular/platform-browser';
 import { IPayPalConfig, ICreateOrderRequest } from 'ngx-paypal';
-import { data } from 'jquery';
+
 
 @Component({
   selector: 'app-project-show-investor',
@@ -163,7 +163,9 @@ export class ProjectShowInvestorComponent implements OnInit {
 
     this.ObjetAideForCompanyOwner.expNom = this.infosUser.nom + '.' + this.infosUser.prenom;
 
+    this.fondInvestor.nomInvestor = this.infosUser.nom + '.' + this.infosUser.prenom;
 
+    this.fondInvestor.idInvestor = this.infosUser.id;
 
     this.route.params.subscribe(params => {
 
@@ -202,6 +204,8 @@ export class ProjectShowInvestorComponent implements OnInit {
      });
 
     this.fondInvestor.timestamp = Date.now();
+
+    
 
    }
 
@@ -336,6 +340,8 @@ export class ProjectShowInvestorComponent implements OnInit {
       this.ObjetProjectTemplate.idManager = data.idManager;
 
       this.ObjetProjectTemplate.valid_project = data.valid_project;
+
+      this.fondInvestor.idProject = this.ObjetProject.id;
 
       if (this.ObjetProject.idManager === '') {
 
