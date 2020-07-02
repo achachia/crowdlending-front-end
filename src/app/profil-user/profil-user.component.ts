@@ -47,7 +47,7 @@ export class ProfilUserComponent implements OnInit {
                                date_update: ''
        };
 
-    public isErreurUpdatePofil = false;
+    public isErreurUpdateProfil = false;
 
     public isvalidUpdateProfil = false;
 
@@ -165,7 +165,7 @@ export class ProfilUserComponent implements OnInit {
 
         if (data.length === 0){
 
-               this.isErreurUpdatePofil = true;
+               this.isErreurUpdateProfil = true;
 
         }else{
 

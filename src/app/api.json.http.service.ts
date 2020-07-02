@@ -138,6 +138,15 @@ export class apiHttpJsonService {
 
   }
 
+  public getDataInfosProfil(idProfil, statutProfil){
+
+
+
+
+
+
+  }
+
   public updateProfilUser(objectUpdate){
 
     let url = '';
@@ -321,17 +330,19 @@ export class apiHttpJsonService {
 
    }
 
-   getListQuestionReponsesByAdmin(idAdmin, idCompanyOwner, idProject){
+   /**************************** composant admin /compnay-owner****************************************** */
+
+   getListQuestionReponsesByAdminForCompanyOwner(idAdmin, idCompanyOwner, idProject){
 
     // liste des commaitaires envoye par admin vers company-owner
-    
+
     const url = this.apiUrlCloud + '/questionsAide?destId=' + idCompanyOwner + '&expdId=' + idAdmin + '&idProject=' + idProject + '&typeComtpteExp=admin&typeCompteDest=company_owner' ;
 
     return this.http.get(url);
 
    }
 
-   getListQuestionReponsesByCompanyOwner(idCompanyOwner, idAdmin, idProject){
+   getListQuestionReponsesByCompanyOwnerForManager(idCompanyOwner, idAdmin, idProject){
 
     // liste des commaitaires envoye par company-owner vers admin
 
@@ -342,10 +353,20 @@ export class apiHttpJsonService {
 
    }
 
+   saveQuestionReponsesByAdminForCompanyOwner(objectQuestion){
+
+    const url = this.apiUrlCloud + '/questionsAide' ;
+
+    return this.http.post(url, objectQuestion);
+
+   }
+
+   /**************************** composant Investor /compnay-owner****************************************** */
+
    getListQuestionReponsesByInvestorForCompanyOwner(idInvestor, idCompanyOwner, idProject){
 
     // liste des commaitaires envoye par admin vers company-owner
-    
+
     const url = this.apiUrlCloud + '/questionsAide?destId=' + idCompanyOwner + '&expdId=' + idInvestor + '&idProject=' + idProject + '&typeComtpteExp=investor&typeCompteDest=company_owner' ;
 
     return this.http.get(url);
@@ -356,30 +377,154 @@ export class apiHttpJsonService {
 
     // liste des commaitaires envoye par company-owner vers admin
 
-    const url = this.apiUrlCloud + '/questionsAide?destId=' + idInvestor + '&expdId=' + idCompanyOwner + '&idProject=' + idProject + '&typeComtpteExp=company_owner&typeCompteDest=nvestor' ;
+    const url = this.apiUrlCloud + '/questionsAide?destId=' + idInvestor + '&expdId=' + idCompanyOwner + '&idProject=' + idProject + '&typeComtpteExp=company_owner&typeCompteDest=investor' ;
 
 
     return this.http.get(url);
 
    }
 
-   saveQuestionReponsesByCompanyOwner(objectQuestion){
+   saveQuestionReponsesByInvestorForCompanyOwner(objectQuestion){
+
+    const url = this.apiUrlCloud + '/questionsAide' ;
+
+    return this.http.post(url, objectQuestion);
+
+   }
+
+   /**************************** composant compnay-owner /investor ****************************************** */
+
+   getListQuestionReponsesForCompanyOwner(idCompanyOwner, idProject){
+
+    // liste des commaitaires envoye par admin vers company-owner
+
+    const url = this.apiUrlCloud + '/questionsAide?destId=' + idCompanyOwner  + '&idProject=' + idProject + '&typeComtpteExp=investor&typeCompteDest=company_owner' ;
+
+    return this.http.get(url);
+
+   }
+
+   getListQuestionReponsessendByCompanyOwner(idCompanyOwner, idProject){
+
+    // liste des commaitaires envoye par admin vers company-owner
+
+    const url = this.apiUrlCloud + '/questionsAide?&expdId=' + idCompanyOwner + '&idProject=' + idProject + '&typeComtpteExp=company_owner&typeCompteDest=investor' ;
+
+    return this.http.get(url);
+
+   }
+
+   saveQuestionReponsesByCompanyOwnerForManager(objectQuestion){
 
     const url = this.apiUrlCloud + '/questionsAide' ;
 
 
-    return this.http.post(url,objectQuestion);
+    return this.http.post(url, objectQuestion);
 
 
    }
 
-   saveQuestionReponsesByAdmin(objectQuestion){
+   saveQuestionReponsesByCompanyOwnerForInvestor(objectQuestion){
 
     const url = this.apiUrlCloud + '/questionsAide' ;
 
 
-    return this.http.post(url,objectQuestion);
+    return this.http.post(url, objectQuestion);
 
 
    }
+
+  
+     /*********************************************************************** */
+  
+
+   
+
+
+
+  
+
+   checkInvestByProject(idProject, idInvestor){
+
+    const url = this.apiUrlCloud + '/investissements?projectId=' + idProject + '&investorId=' + idInvestor;
+
+    return this.http.get(url);
+
+   }
+
+   validInvestByProject(idProject, idInvestor){
+
+    const url = this.apiUrlCloud + '/investissements?projectId=' + idProject + '&investorId=' + idInvestor + '&stautDemande=1';
+
+    return this.http.get(url);
+
+   }
+
+   sendDemandeInvestForCompanyOwner(objectDemande){
+
+
+    const url = this.apiUrlCloud + '/investissements';
+
+    return this.http.post(url, objectDemande);
+
+
+   }
+
+   getListInvestorByProject(idProject){
+
+    const url = this.apiUrlCloud + '/investissements?projectId=' + idProject + '&stautDemande=1';
+
+    return this.http.get(url);
+
+   }
+
+   getListInvestorByProjectForCompanyOwner(idProject){
+
+    const url = this.apiUrlCloud + '/investissements?projectId=' + idProject ;
+
+    return this.http.get(url);
+
+   }
+
+   confirmDemandeInvestor(ObjectInvestissement, statutDemande){
+
+    const date = new Date();
+
+    ObjectInvestissement.date_valid = date.toLocaleString('fr-FR', {
+                                                                weekday: 'long',
+                                                                year: 'numeric',
+                                                                month: 'long',
+                                                                day: 'numeric',
+                                                                hour: 'numeric',
+                                                                minute: 'numeric',
+                                                                second: 'numeric',
+
+    });
+
+    ObjectInvestissement.date_valid_timestamp = Date.now();
+
+    if (statutDemande === 'valider'){
+
+      ObjectInvestissement.stautDemande = 1;
+
+    }
+
+    if (statutDemande === 'annule'){
+
+      ObjectInvestissement.stautDemande = 2;
+
+    }
+
+
+
+    const url = this.apiUrlCloud + '/investissements/' + ObjectInvestissement.id ;
+
+    return this.http.put(url, ObjectInvestissement);
+
+
+
+   }
+
+
+
 }

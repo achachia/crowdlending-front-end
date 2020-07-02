@@ -44,6 +44,20 @@ export class ProjectShowCompanyOwnerComponent implements OnInit {
       date_update: ''
    };
 
+   public managerProject = {
+                id: '',
+                nom: '',
+                prenom: '',
+                login: '',
+                password: '',
+                sex: '',
+                dateNaissance: '',
+                photoUser: '',
+                typeCompte: '',
+                date_created: '',
+                date_update: ''
+   };
+
    public ObjetProject = {
 
       id: '',
@@ -99,6 +113,8 @@ export class ProjectShowCompanyOwnerComponent implements OnInit {
       body_aide: '',
       destId: '',  // admin
       expdId: '', // company_owner,
+      expNom: '', // company_owner,
+      expAvatar : '', // company_owner,
       typeComtpteExp: 'company_owner',
       typeCompteDest: 'admin',
       date_created: '',
@@ -107,19 +123,49 @@ export class ProjectShowCompanyOwnerComponent implements OnInit {
 
    };
 
+   public ObjetAideByInvestor = {
+      body_aide: '',
+      destId: '',  // investor
+      expdId: '', // company_owner,
+      expNom: '', // company_owner,
+      expAvatar : '', // company_owner,
+      typeComtpteExp: 'company_owner',
+      typeCompteDest: 'investor',
+      date_created: '',
+      timestamp: 0,
+      idProject: ''
+
+   };
+
    public listQuestionsAidesForConsiller = [];
+
+   public listQuestionsAidesForInvestor = [];
 
    public photoUserAdmin = './assets/img/users/user_f.png';
 
    public polling: any;
 
+   public page = 1;
+
+   public pageSize = 4;
+
+   public collectionSize = 0;
+
+   public checkInvest = false;
+
+   public listInvestor = [];
+
+   public showTextera = false;
+
 
    constructor(private route: ActivatedRoute, private router: Router, private cookie: CookieService, private apiService: apiHttpJsonService
-      , private ngxService: NgxUiLoaderService, private datePipe: DatePipe, public sanitizer: DomSanitizer) {
+              , private ngxService: NgxUiLoaderService, private datePipe: DatePipe, public sanitizer: DomSanitizer) {
 
       this.infosUser = JSON.parse(this.cookie.get('infosUser'));
 
       this.ObjetAideByConseiller.expdId = this.infosUser.id;
+
+      this.ObjetAideByInvestor.expdId = this.infosUser.id;
 
 
       if (this.infosUser.photoUser === '') {
@@ -140,6 +186,14 @@ export class ProjectShowCompanyOwnerComponent implements OnInit {
 
       }
 
+      this.ObjetAideByConseiller.expAvatar = this.infosUser.photoUser;
+
+      this.ObjetAideByInvestor.expAvatar = this.infosUser.photoUser;
+
+      this.ObjetAideByConseiller.expNom = this.infosUser.nom + '.' + this.infosUser.prenom;
+
+      this.ObjetAideByInvestor.expNom = this.infosUser.nom + '.' + this.infosUser.prenom;
+
       this.route.params.subscribe(params => {
 
          this.ObjetProject.id = params.id;
@@ -148,12 +202,16 @@ export class ProjectShowCompanyOwnerComponent implements OnInit {
 
          this.ObjetAideByConseiller.idProject = params.id;
 
+         this.ObjetAideByInvestor.idProject = params.id;
+
 
          this.polling = setInterval(() => {
 
             this.getListQuestionsAides();
 
-         }, 30 * 1000);
+            this.getListQuestionsAidesForInvestor();
+
+         }, 10 * 1000);
 
          console.log('idProject', this.ObjetProject.id);
 
@@ -166,14 +224,7 @@ export class ProjectShowCompanyOwnerComponent implements OnInit {
       console.log('ProfilUserComponent', this.infosUser);
    }
 
-   ngOnInit(): void {
-
-
-
-
-
-
-   }
+   ngOnInit(): void {}
 
 
 
@@ -232,6 +283,10 @@ export class ProjectShowCompanyOwnerComponent implements OnInit {
 
          this.getListQuestionsAides();
 
+         this.getListInvestorByProject();
+
+         this.getListQuestionsAidesForInvestor();
+
          this.ngxService.stop();
 
 
@@ -275,6 +330,53 @@ export class ProjectShowCompanyOwnerComponent implements OnInit {
       });
 
    }
+
+   getListInvestorByProject(){
+
+
+      this.apiService.getListInvestorByProjectForCompanyOwner(this.ObjetProject.id).subscribe((dataInvestor: any) => {
+
+        console.log('dataInvestor', dataInvestor);
+
+        this.listInvestor = dataInvestor;
+      
+      
+      }, (error: any) => { });
+
+
+    }
+
+    confDemandeInvestForInvestor(ObjectInvestissement){
+
+      this.apiService.confirmDemandeInvestor(ObjectInvestissement, 'valider').subscribe((dataConfirm: any) => {
+
+         console.log(dataConfirm);
+         
+         this.getListInvestorByProject();
+
+      }, (error: any) => {
+
+      });
+
+
+
+    }
+
+    declinerDemandeInvestForInvestor(ObjectInvestissement){
+
+      this.apiService.confirmDemandeInvestor(ObjectInvestissement, 'annule').subscribe((dataConfirm: any) => {
+
+         console.log(dataConfirm);
+         
+         this.getListInvestorByProject();
+
+      }, (error: any) => {
+
+      });
+
+
+
+    }
 
    getAllImageProject() {
 
@@ -380,7 +482,7 @@ export class ProjectShowCompanyOwnerComponent implements OnInit {
 
       this.ObjetAideByConseiller.destId = this.ObjetProject.idManager;
 
-      this.apiService.saveQuestionReponsesByCompanyOwner(this.ObjetAideByConseiller).subscribe((dataPorte: any) => {
+      this.apiService.saveQuestionReponsesByCompanyOwnerForManager(this.ObjetAideByConseiller).subscribe((dataPorte: any) => {
 
          // console.log(data);
 
@@ -393,17 +495,54 @@ export class ProjectShowCompanyOwnerComponent implements OnInit {
 
    }
 
+   onFormSubmitQuestionForInvestor(){
+
+
+      const date = new Date();
+
+      this.ObjetAideByInvestor.date_created = date.toLocaleString('fr-FR', {
+         weekday: 'long',
+         year: 'numeric',
+         month: 'long',
+         day: 'numeric',
+         hour: 'numeric',
+         minute: 'numeric',
+         second: 'numeric',
+
+      });
+
+      this.ObjetAideByInvestor.timestamp = Date.now();
+
+      console.log('this.ObjetAideByInvestor.destId = ', this.ObjetAideByInvestor.destId);
+      
+
+      this.apiService.saveQuestionReponsesByCompanyOwnerForInvestor(this.ObjetAideByInvestor).subscribe((dataPorte: any) => {
+
+         // console.log(data);
+
+          this.getListQuestionsAidesForInvestor();
+
+          this.showTextera = false;
+
+
+      }, (error: any) => {
+
+      });
+   }
+
    getListQuestionsAides() {
 
 
       this.listQuestionsAidesForConsiller = [];
+
+      
 
       /*************************************************************************************** */
 
       // recuperer la liste des questions envoye par l'admin (id-admin ='1' ) pour le compagny owner
 
       // tslint:disable-next-line:max-line-length
-      this.apiService.getListQuestionReponsesByAdmin(this.ObjetProject.idManager, this.infosUser.id, this.ObjetProject.id).subscribe((dataQuestion: any) => {
+      this.apiService.getListQuestionReponsesByAdminForCompanyOwner(this.ObjetProject.idManager, this.infosUser.id, this.ObjetProject.id).subscribe((dataQuestion: any) => {
 
          console.log('dataQuestion', dataQuestion);
 
@@ -430,7 +569,7 @@ export class ProjectShowCompanyOwnerComponent implements OnInit {
       // recuperer la liste des questions envoyer  par le company-owner  en vers l'admin () id-admin ='1')
 
       // tslint:disable-next-line:max-line-length
-      this.apiService.getListQuestionReponsesByCompanyOwner(this.infosUser.id, this.ObjetProject.idManager, this.ObjetProject.id).subscribe((dataQuestionBis: any) => {
+      this.apiService.getListQuestionReponsesByCompanyOwnerForManager(this.infosUser.id, this.ObjetProject.idManager, this.ObjetProject.id).subscribe((dataQuestionBis: any) => {
 
          console.log('dataQuestion', dataQuestionBis);
 
@@ -452,12 +591,88 @@ export class ProjectShowCompanyOwnerComponent implements OnInit {
       });
 
 
-
-
       /************************************************************************************ */
 
       this.listQuestionsAidesForConsiller = this.listQuestionsAidesForConsiller.sort((c1, c2) => c2.timestamp - c1.timestamp);
 
+
+   }
+
+   getListQuestionsAidesForInvestor() {
+
+
+      this.listQuestionsAidesForInvestor = [];
+
+      
+
+      /*************************************************************************************** */
+
+      // recuperer la liste des questions envoye par le porteur projet (id-admin ='1' ) pour le compagny owner
+
+      // tslint:disable-next-line:max-line-length
+      this.apiService.getListQuestionReponsesForCompanyOwner(this.infosUser.id, this.ObjetProject.id).subscribe((dataQuestion: any) => {
+
+         console.log('dataQuestion', dataQuestion);
+
+         // tslint:disable-next-line:prefer-for-of
+         for (let index = 0; index < dataQuestion.length; index++) {
+
+            this.listQuestionsAidesForInvestor.push(dataQuestion[index]);
+
+
+         }
+
+         console.log('listQuestionsAidesForConsiller', this.listQuestionsAidesForConsiller);
+
+         this.listQuestionsAidesForInvestor = this.listQuestionsAidesForInvestor.sort((c1, c2) => c2.timestamp - c1.timestamp);
+
+
+      }, (error: any) => {
+
+      });
+
+
+      /************************************************************************************ */
+
+      // recuperer la liste des questions envoyer  par le company-owner  en vers l'admin () id-admin ='1')
+
+      // tslint:disable-next-line:max-line-length
+      this.apiService.getListQuestionReponsessendByCompanyOwner(this.infosUser.id, this.ObjetProject.id).subscribe((dataQuestionBis: any) => {
+
+         console.log('dataQuestion', dataQuestionBis);
+
+         // tslint:disable-next-line:prefer-for-of
+         for (let indexBis = 0; indexBis < dataQuestionBis.length; indexBis++) {
+
+            this.listQuestionsAidesForInvestor.push(dataQuestionBis[indexBis]);
+
+
+         }
+
+         console.log('this.listQuestionsAidesForInvestor', this.listQuestionsAidesForInvestor);
+
+         this.listQuestionsAidesForInvestor = this.listQuestionsAidesForInvestor.sort((c1, c2) => c2.timestamp - c1.timestamp);
+
+
+      }, (error: any) => {
+
+      });
+
+
+
+
+      /************************************************************************************ */
+
+      this.listQuestionsAidesForInvestor = this.listQuestionsAidesForInvestor.sort((c1, c2) => c2.timestamp - c1.timestamp);
+
+
+   }
+
+   replyByCompanyOwnerForInvestFor(expdId){
+
+      this.ObjetAideByInvestor.destId = expdId;
+
+      this.showTextera = true;
 
    }
 

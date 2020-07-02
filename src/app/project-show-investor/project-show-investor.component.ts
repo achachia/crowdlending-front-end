@@ -5,6 +5,8 @@ import { apiHttpJsonService } from './../api.json.http.service';
 import { NgxUiLoaderService } from 'ngx-ui-loader';
 import { DatePipe } from '@angular/common';
 import { DomSanitizer } from '@angular/platform-browser';
+import { IPayPalConfig, ICreateOrderRequest } from 'ngx-paypal';
+import { data } from 'jquery';
 
 @Component({
   selector: 'app-project-show-investor',
@@ -12,6 +14,8 @@ import { DomSanitizer } from '@angular/platform-browser';
   styleUrls: ['./project-show-investor.component.css']
 })
 export class ProjectShowInvestorComponent implements OnInit {
+
+  public payPalConfig?: IPayPalConfig;
 
   public infosUser = {
     id: '',
@@ -80,14 +84,16 @@ export class ProjectShowInvestorComponent implements OnInit {
   };
 
 
-  public imagesProjects = [];  
+  public imagesProjects = [];
 
   public arrayAdressReseauxSociauxProject = [];
 
   public ObjetAideForCompanyOwner = {
     body_aide: '',
     destId: '',  // company_owner
-    expdId: '', // admin,
+    expdId: '', // investor,
+    expNom: '', // investor,
+    expAvatar : '', // investor,
     typeComtpteExp: 'investor',
     typeCompteDest: 'company_owner',
     date_created: '',
@@ -100,102 +106,35 @@ export class ProjectShowInvestorComponent implements OnInit {
 
   public polling: any;
 
-  public  COUNTRIES  = [
-    {
-      id: 1,
-      name: 'Russia',
-      flag: 'f/f3/Flag_of_Russia.svg',
-      area: 17075200,
-      population: 146989754
-    },
-    {
-      id: 2,
-      name: 'France',
-      flag: 'c/c3/Flag_of_France.svg',
-      area: 640679,
-      population: 64979548
-    },
-    {
-      id: 3,
-      name: 'Germany',
-      flag: 'b/ba/Flag_of_Germany.svg',
-      area: 357114,
-      population: 82114224
-    },
-    {
-      id: 4,
-      name: 'Portugal',
-      flag: '5/5c/Flag_of_Portugal.svg',
-      area: 92090,
-      population: 10329506
-    },
-    {
-      id: 5,
-      name: 'Canada',
-      flag: 'c/cf/Flag_of_Canada.svg',
-      area: 9976140,
-      population: 36624199
-    },
-    {
-      id: 6,
-      name: 'Vietnam',
-      flag: '2/21/Flag_of_Vietnam.svg',
-      area: 331212,
-      population: 95540800
-    },
-    {
-      id: 7,
-      name: 'Brazil',
-      flag: '0/05/Flag_of_Brazil.svg',
-      area: 8515767,
-      population: 209288278
-    },
-    {
-      id: 8,
-      name: 'Mexico',
-      flag: 'f/fc/Flag_of_Mexico.svg',
-      area: 1964375,
-      population: 129163276
-    },
-    {
-      id: 9,
-      name: 'United States',
-      flag: 'a/a4/Flag_of_the_United_States.svg',
-      area: 9629091,
-      population: 324459463
-    },
-    {
-      id: 10,
-      name: 'India',
-      flag: '4/41/Flag_of_India.svg',
-      area: 3287263,
-      population: 1324171354
-    },
-    {
-      id: 11,
-      name: 'Indonesia',
-      flag: '9/9f/Flag_of_Indonesia.svg',
-      area: 1910931,
-      population: 263991379
-    },
-    {
-      id: 12,
-      name: 'Tuvalu',
-      flag: '3/38/Flag_of_Tuvalu.svg',
-      area: 26,
-      population: 11097
-    },
-    {
-      id: 13,
-      name: 'China',
-      flag: 'f/fa/Flag_of_the_People%27s_Republic_of_China.svg',
-      area: 9596960,
-      population: 1409517397
-    }
-  ];
+  public page = 1;
+
+  public pageSize = 4;
+
+  public collectionSize = 0;
+
+  public checkInvest = false;
+
+  public validInvest = false;
+
+  public listInvestor = [];
+
+  public showFormFond = false;
+
+  public fondInvestor = {
+
+                         timestamp: 0,
+                         idProject: '',
+                         date_created: '',
+                         nomInvestor : '',
+                         idInvestor : '',
+                         amount : '',
+                         modeTransc : 'Paypal'
+
+
+                       };
 
   constructor(private route: ActivatedRoute, private router: Router, private cookie: CookieService, private apiService: apiHttpJsonService
-    , private ngxService: NgxUiLoaderService, private datePipe: DatePipe, public sanitizer: DomSanitizer) {
+    ,         private ngxService: NgxUiLoaderService, private datePipe: DatePipe, public sanitizer: DomSanitizer) {
 
     this.infosUser = JSON.parse(this.cookie.get('infosUser'));
 
@@ -220,6 +159,12 @@ export class ProjectShowInvestorComponent implements OnInit {
 
     }
 
+    this.ObjetAideForCompanyOwner.expAvatar = this.infosUser.photoUser;  
+
+    this.ObjetAideForCompanyOwner.expNom = this.infosUser.nom + '.' + this.infosUser.prenom;
+
+
+
     this.route.params.subscribe(params => {
 
       this.ObjetProject.id = params.id;
@@ -237,7 +182,108 @@ export class ProjectShowInvestorComponent implements OnInit {
     console.log('ProfilUserComponent', this.infosUser);
   }
 
-  ngOnInit(): void { }
+  ngOnInit(): void {  }
+
+  addFondInvestForPorject(){
+
+    this.showFormFond = true;
+
+    const date = new Date();
+
+    this.fondInvestor.date_created = date.toLocaleString('fr-FR', {
+                                              weekday: 'long',
+                                              year: 'numeric',
+                                              month: 'long',
+                                              day: 'numeric',
+                                              hour: 'numeric',
+                                              minute: 'numeric',
+                                              second: 'numeric',
+
+     });
+
+    this.fondInvestor.timestamp = Date.now();
+
+   }
+
+  onFormSubmitAddFondByInvestor(){
+
+        this.initConfig();
+
+  }
+
+  private initConfig(): void {
+    this.payPalConfig = {
+    currency: 'EUR',
+    clientId: 'AST3IB2GzDWxt19bQ32sdSA8Qvki6oqZ3EEDEoz_aWbwA3AVtwzUsRu6jjoVw9ajRYthH7YbCd9hkaNC',
+    // tslint:disable-next-line:whitespace
+    // tslint:disable-next-line:no-angle-bracket-type-assertion
+    createOrderOnClient: (data) => <ICreateOrderRequest>{
+      intent: 'CAPTURE',
+      purchase_units: [
+        {
+          amount: {
+            currency_code: 'EUR',
+            value: this.fondInvestor.amount,
+            breakdown: {
+              item_total: {
+                currency_code: 'EUR',
+                value: this.fondInvestor.amount
+              }
+            }
+          },
+          items: [
+            {
+              name: 'Enterprise Subscription',
+              quantity: '1',
+              category: 'DIGITAL_GOODS',
+              unit_amount: {
+                currency_code: 'EUR',
+                value: this.fondInvestor.amount,
+              },
+            }
+          ]
+        }
+      ]
+    },
+    advanced: {
+      commit: 'true'
+    },
+    style: {
+      label: 'paypal',
+      layout: 'vertical'
+    },
+    onApprove: (data, actions) => {
+      console.log('onApprove - transaction was approved, but not authorized', data, actions);
+      actions.order.get().then(details => {
+        console.log('onApprove - you can get full order details inside onApprove: ', details);
+      });
+    },
+    onClientAuthorization: (data) => {
+      console.log('onClientAuthorization - you should probably inform your server about completed transaction at this point', data);
+      // this.showSuccess = true;
+    },
+    onCancel: (data, actions) => {
+      console.log('OnCancel', data, actions);
+    },
+    onError: err => {
+      console.log('OnError', err);
+    },
+    onClick: (data, actions) => {
+      console.log('onClick', data, actions);
+    },
+  };
+  }
+
+ 
+
+  get getListInvestor() {
+
+    this.collectionSize = this.listInvestor.length;
+
+    // tslint:disable-next-line:max-line-length
+    return this.listInvestor.map((investor, i) => ({id: i + 1, ...investor})).slice((this.page - 1) * this.pageSize, (this.page - 1) * this.pageSize + this.pageSize);
+  }
+
 
 
 
@@ -324,6 +370,13 @@ export class ProjectShowInvestorComponent implements OnInit {
 
       this.getAllImageProject();
 
+      this.checkInvestByProject();
+
+      this.validInvestByProject();
+
+
+      this.getListInvestorByProject();
+
       this.ngxService.stop();
 
 
@@ -333,7 +386,112 @@ export class ProjectShowInvestorComponent implements OnInit {
 
   }
 
+  checkInvestByProject(){
 
+    this.apiService.checkInvestByProject(this.infosUser.id, this.ObjetProject.id).subscribe((dataCheck: any) => {
+
+     console.log('dataCheck', dataCheck.length);
+      // tslint:disable-next-line:align
+      if (dataCheck.length > 0){
+
+           this.checkInvest = true;
+      }
+
+    }, (error: any) => {
+
+    });
+
+
+  }
+
+  validInvestByProject(){
+
+    this.apiService.validInvestByProject(this.infosUser.id, this.ObjetProject.id).subscribe((dataCheck: any) => {
+
+     console.log('dataCheck', dataCheck.length);
+      // tslint:disable-next-line:align
+      if (dataCheck.length > 0){
+
+           this.validInvest = true;
+      }
+
+    }, (error: any) => {
+
+    });
+
+
+  }
+
+  sendDemandeInvestForCompanyOwner(){
+
+    // tslint:disable-next-line:max-line-length
+    // tslint:disable-next-line:no-shadowed-variable
+    // tslint:disable-next-line:max-line-length
+
+    const date = new Date();
+
+    const dateCreated = date.toLocaleString('fr-FR', {
+                                              weekday: 'long',
+                                              year: 'numeric',
+                                              month: 'long',
+                                              day: 'numeric',
+                                              hour: 'numeric',
+                                              minute: 'numeric',
+                                              second: 'numeric',
+
+     });
+
+    const objectDemande = {
+
+                           investorId : this.infosUser.id,
+
+                           investorPhotoUser :  this.infosUser.photoUser,
+
+                           investorNom : this.infosUser.nom + '.' + this.infosUser.prenom,
+
+                           companyOwnerId : this.ObjetProject.company_ownerId,
+
+                           projectId : this.ObjetProject.id,
+
+                           stautDemande : 0,
+
+                           date_created : dateCreated,
+
+                           timestamp : Date.now(),
+
+                           date_valid : '',
+
+
+
+    };
+
+
+    this.apiService.sendDemandeInvestForCompanyOwner(objectDemande).subscribe((dataDemande: any) => {
+
+      console.log('data-send', dataDemande);
+
+
+     }, (error: any) => {
+
+     });
+
+
+
+  }
+
+  getListInvestorByProject(){
+
+    this.apiService.getListInvestorByProject(this.ObjetProject.id).subscribe((dataInvestor: any) => {
+
+      console.log('dataInvestor', dataInvestor);
+
+      this.listInvestor = dataInvestor;
+
+
+     }, (error: any) => { });
+
+
+  }
 
   getInfosCompanyOwner() {
 
@@ -368,7 +526,7 @@ export class ProjectShowInvestorComponent implements OnInit {
 
         this.getListQuestionsAides();
 
-      }, 30 * 1000);
+      }, 10 * 1000);
 
 
     }, (error: any) => {
@@ -470,13 +628,13 @@ export class ProjectShowInvestorComponent implements OnInit {
     const date = new Date();
 
     this.ObjetAideForCompanyOwner.date_created = date.toLocaleString('fr-FR', {
-      weekday: 'long',
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric',
-      hour: 'numeric',
-      minute: 'numeric',
-      second: 'numeric',
+                                                                            weekday: 'long',
+                                                                            year: 'numeric',
+                                                                            month: 'long',
+                                                                            day: 'numeric',
+                                                                            hour: 'numeric',
+                                                                            minute: 'numeric',
+                                                                            second: 'numeric',
 
     });
 
@@ -487,7 +645,7 @@ export class ProjectShowInvestorComponent implements OnInit {
     this.ObjetAideForCompanyOwner.idProject = this.ObjetProject.id;
 
 
-    this.apiService.saveQuestionReponsesByAdmin(this.ObjetAideForCompanyOwner).subscribe((dataPorte: any) => {
+    this.apiService.saveQuestionReponsesByInvestorForCompanyOwner(this.ObjetAideForCompanyOwner).subscribe((dataPorte: any) => {
 
       // console.log(data);
 
@@ -500,13 +658,15 @@ export class ProjectShowInvestorComponent implements OnInit {
 
   }
 
+
+
   getListQuestionsAides() {
 
     this.listQuestionsAidesForCompanyOwner = [];
 
     /*************************************************************************************** */
 
-    // recuperer la liste des questions envoye par l'admin (id-admin ='1' ) pour le compagny owner
+    // recuperer la liste des questions envoye par l'investor (id-admin ='1' ) pour le compagny owner
 
     // tslint:disable-next-line:max-line-length
     this.apiService.getListQuestionReponsesByInvestorForCompanyOwner(this.infosUser.id, this.companyOwner.id, this.ObjetProject.id).subscribe((dataQuestion: any) => {

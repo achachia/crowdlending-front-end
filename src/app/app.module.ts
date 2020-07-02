@@ -46,6 +46,8 @@ import { FooterTemplatesAdministratorComponent } from './templates/administrator
 
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
+import { NgxPayPalModule } from 'ngx-paypal';
+
 import { MatDateFormats, MAT_DATE_LOCALE, MAT_DATE_FORMATS } from '@angular/material/core';
 
 
@@ -104,6 +106,7 @@ export const MY_FORMAT: MatDateFormats = {
     BrowserAnimationsModule,
     NgxUiLoaderModule,
     NgbModule,
+    NgxPayPalModule
   
     
 

@@ -217,11 +217,15 @@
                   <div class="comments" style="margin-top:5%;margin-left:5%;">
                     <div class="comment-wrap">
                       <div class="photo">
-                        <div class="avatar"
-                          style="background-image: url('{{infosUser.photoUser }}')">
+                      
+                        <div  class="avatar" > 
+
+                          <img class="img-profile rounded-circle"  style="width:50px" [src]="infosUser.photoUser"  />
+
                         </div>
                       </div>
                       <div class="comment-block">
+
                         <form action="" #questionFormForConseiller = "ngForm"  (ngSubmit)="onFormSubmitQuestionForConseiller()">
 
                           <textarea name="" id="" cols="60" rows="3" placeholder="Rédiger votre question..." [(ngModel)] = "ObjetAideByConseiller.body_aide" name="question"></textarea>
@@ -241,14 +245,20 @@
 
                       <div class="photo">
 
-                        <div *ngIf="objectquestion.typeComtpteExp == 'company_owner'" class="avatar"   style="background-image: url('{{infosUser.photoUser }}')"> </div>
+                     
+                        <div  class="avatar" > 
 
-                        <div *ngIf="objectquestion.typeComtpteExp == 'admin'" class="avatar"   style="background-image: url('{{photoUserAdmin }}')"> </div>
+                          <img class="img-profile rounded-circle"  style="width:50px" [src]="objectquestion.expAvatar"  />
+
+                         </div>
                       </div>
                       <div class="comment-block">
                         <p class="comment-text">{{objectquestion.body_aide}}</p>
                         <div class="bottom-comment">
-                          <div class="comment-date">{{objectquestion.date_created}}</div>
+                          <div class="comment-date">{{objectquestion.date_created}}</div><br/>
+
+                          <span   style="font-weight: bold;">{{objectquestion.expNom }}  </span>
+                      
                         <!--    <ul class="comment-actions">
                           <li class="complain">Complain</li>
                             <li class="reply">Reply</li>
@@ -266,6 +276,132 @@
                 </ng-template>
 
               </ngb-tab>
+
+              <ngb-tab>
+
+                <ng-template ngbTabTitle>Les investisseurs</ng-template>
+
+                <ng-template ngbTabContent>
+                   
+
+                    <table class="table table-striped"  style="margin-top:10%;margin-left:10%;width:100%" *ngIf="listInvestor.length>0">
+                        <thead>
+                        <tr>
+                          <th scope="col">Photos</th>
+                          <th scope="col">Nom</th>  
+                          <th scope="col">Statut</th>                                      
+                          <th scope="col">Action</th>                
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr *ngFor="let ObjectInvestissement of listInvestor">
+
+                          <td scope="row"><img [src]="ObjectInvestissement.investorPhotoUser" class="mr-2" style="width: 20px"></td>
+                        
+                          <td>{{ObjectInvestissement.investorNom}}</td> 
+
+                          <td>                           
+
+                            <button type="button" class="btn btn-primary btn-lg btn-block" *ngIf="ObjectInvestissement.stautDemande=='0'"  >En attente</button>
+
+                            <button type="button" class="btn btn-primary btn-lg btn-block" *ngIf="ObjectInvestissement.stautDemande=='1'"  >Validé</button>
+
+                            <button type="button" class="btn btn-primary btn-lg btn-block" *ngIf="ObjectInvestissement.stautDemande=='2'"  >Annulé</button>                           
+
+                            
+                          </td> 
+
+                          <td>
+
+                            <button type="button" class="btn btn-success btn-lg btn-block" *ngIf="ObjectInvestissement.stautDemande=='0'" (click)="confDemandeInvestForInvestor(ObjectInvestissement)" >Accepter la demande</button>
+
+                            <button type="button" class="btn btn-danger btn-lg btn-block" *ngIf="ObjectInvestissement.stautDemande=='0'" (click)="declinerDemandeInvestForInvestor(ObjectInvestissement)" >Décliner la demande</button>
+
+                           
+                          </td> 
+                         
+                        </tr>
+                        </tbody>
+                      </table>
+                      
+                      <div class="d-flex justify-content-between p-2" *ngIf="listInvestor.length>0">
+                        <ngb-pagination [collectionSize]="collectionSize" [(page)]="page" [pageSize]="pageSize">
+                        </ngb-pagination>
+                      
+                        <select class="custom-select" style="width: auto" [(ngModel)]="pageSize">
+                          <option [ngValue]="2">2 items per page</option>
+                          <option [ngValue]="4">4 items per page</option>
+                          <option [ngValue]="6">6 items per page</option>
+                        </select>
+                      </div>
+
+                </ng-template>
+
+            </ngb-tab>
+
+            <ngb-tab>
+
+              <ng-template ngbTabTitle>Questions & Réponses/Investiteurs</ng-template>
+
+              <ng-template ngbTabContent>
+
+                <div class="comments" style="margin-top:5%;margin-left:5%;">
+                  <div class="comment-wrap" *ngIf="showTextera" >
+                    <div class="photo">
+                      <div class="avatar">
+                        <img class="img-profile rounded-circle"  style="width:50px" [src]="infosUser.photoUser"  />
+                      </div>
+                    </div>
+                    <div class="comment-block">
+                      <form action="" #questionFormForInvestor = "ngForm"  (ngSubmit)="onFormSubmitQuestionForInvestor()">
+
+                        <textarea name="" id="" cols="60" rows="3" placeholder="Rédiger votre question..." [(ngModel)] = "ObjetAideByInvestor.body_aide" name="question"></textarea>
+
+
+
+                        <div class="form-group" style="margin-top:5%;">
+
+                          <button type="submit" class="btn btn-primary" [disabled]="!questionFormForInvestor.form.valid">Envoyer</button>
+
+                      </div>
+
+                         <!-- <editor  apiKey="qagffr3pkuv17a8on1afax661irst1hbr4e6tbv888sz91jc"    class="mat-elevation-z1"     (onInit)="handleEditorInit($event)"   [init]="{  icons: 'material', skin: 'borderless', plugins: 'wordcount', menubar: false, min_height: 150  }"  ></editor>-->
+                      </form>
+                    </div>
+                  </div>
+
+                  <div class="comment-wrap"  *ngFor="let objectquestioninvest of listQuestionsAidesForInvestor; let i = index ">
+
+                    <div class="photo">
+
+                      <img class="img-profile rounded-circle"  style="width:50px" [src]="objectquestioninvest.expAvatar"  />
+                    </div>
+                    <div class="comment-block">
+                      <p class="comment-text">{{objectquestioninvest.body_aide}}</p>
+                      <div class="bottom-comment">
+
+                        <div class="comment-date">{{objectquestioninvest.date_created}}</div>
+
+                        <span   style="font-weight: bold;">{{objectquestioninvest.expNom }}  </span>
+
+                       
+                        <ul class="comment-actions">
+                          <!--<li class="complain">Complain</li>-->
+                          <li class="reply" (click)="replyByCompanyOwnerForInvestFor(objectquestioninvest.expdId)">Répondre</li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+               
+                </div>
+
+
+
+
+
+              </ng-template>
+
+            </ngb-tab>
 
 
             </ngb-tabset>

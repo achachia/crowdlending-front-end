@@ -1,10 +1,12 @@
-            /******************************* commit : 1.0.8****************************************************/
+            /******************************* commit : 1.0.9 ****************************************************/
 
 Implementation des fonctionnalites suivantes :
 
 1. systeme des questions && reponses (update)(composant-admin-show-company)
 
-2. craete composant all-shows-projects investor
+2. systeme des questions && reponses (create)(composant-admin-show-investor)
+
+3. installation module paypal : // npm install ngx-paypal --save
  
 
 

@@ -100,6 +100,8 @@ export class ProjectShowAdminComponent implements OnInit {
                        body_aide : '',
                        destId : '',  // company_owner
                        expdId : '', // admin,
+                       expNom: '', // admin,
+                       expAvatar : '', // admin,
                        typeComtpteExp : 'admin',
                        typeCompteDest : 'company_owner',
                        date_created : '',
@@ -137,6 +139,10 @@ export class ProjectShowAdminComponent implements OnInit {
                       }
 
                 }
+
+              this.ObjetAideForCompanyOwner.expAvatar = this.infosUser.photoUser;
+
+              this.ObjetAideForCompanyOwner.expNom = this.infosUser.nom + '.' + this.infosUser.prenom;
 
               this.route.params.subscribe(params => {
 
@@ -405,7 +411,7 @@ export class ProjectShowAdminComponent implements OnInit {
     this.ObjetAideForCompanyOwner.idProject = this.ObjetProject.id;
 
 
-    this.apiService.saveQuestionReponsesByAdmin(this.ObjetAideForCompanyOwner).subscribe((dataPorte: any) => {
+    this.apiService.saveQuestionReponsesByAdminForCompanyOwner(this.ObjetAideForCompanyOwner).subscribe((dataPorte: any) => {
 
       // console.log(data);
 
@@ -427,7 +433,7 @@ export class ProjectShowAdminComponent implements OnInit {
     // recuperer la liste des questions envoye par l'admin (id-admin ='1' ) pour le compagny owner
 
     // tslint:disable-next-line:max-line-length
-    this.apiService.getListQuestionReponsesByAdmin(this.infosUser.id, this.companyOwner.id, this.ObjetProject.id).subscribe((dataQuestion: any) => {
+    this.apiService. getListQuestionReponsesByAdminForCompanyOwner(this.infosUser.id, this.companyOwner.id, this.ObjetProject.id).subscribe((dataQuestion: any) => {
 
        console.log('dataQuestion', dataQuestion);
 
@@ -454,7 +460,7 @@ export class ProjectShowAdminComponent implements OnInit {
        // recuperer la liste des questions envoyer  par le company-owner  en vers l'admin () id-admin ='1')
 
     // tslint:disable-next-line:max-line-length
-    this.apiService.getListQuestionReponsesByCompanyOwner(this.companyOwner.id, this.infosUser.id, this.ObjetProject.id).subscribe((dataQuestionBis: any) => {
+    this.apiService.getListQuestionReponsesByCompanyOwnerForManager(this.companyOwner.id, this.infosUser.id, this.ObjetProject.id).subscribe((dataQuestionBis: any) => {
 
           console.log('dataQuestion', dataQuestionBis);
 

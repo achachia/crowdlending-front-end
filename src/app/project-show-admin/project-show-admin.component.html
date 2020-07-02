@@ -336,10 +336,18 @@
                         <ng-template ngbTabContent>
   
                           <div class="comments" style="margin-top:5%;margin-left:5%;">
+                            
                             <div class="comment-wrap">
+
                                 <div class="photo">
-                                    <div class="avatar" style="background-image: url('{{infosUser.photoUser}}')"></div>
+                                  
+                                   <div  class="avatar" > 
+
+                                    <img class="img-profile rounded-circle"  style="width:50px"  [src]="infosUser.photoUser"  />
+          
+                                  </div>
                                 </div>
+                               
                                 <div class="comment-block">
                                     <form action="" #questionFormForCompanyOwner = "ngForm"  (ngSubmit)="onFormSubmitQuestionForCompanyOwner()">
 
@@ -360,14 +368,25 @@
 
                               <div class="photo">
         
-                                <div *ngIf="objectquestion.typeComtpteExp == 'company_owner'" class="avatar"   style="background-image: url('{{companyOwner.photoUser }}')"> </div>
-        
-                                <div *ngIf="objectquestion.typeComtpteExp == 'admin'" class="avatar"   style="background-image: url('{{ infosUser.photoUser }}')"> </div>
+                          
+
+                                <div  class="avatar" > 
+
+                                        <img class="img-profile rounded-circle"  style="width:50px" [src]="objectquestion.expAvatar"  />
+
+                                </div>
+
+
                               </div>
                               <div class="comment-block">
                                 <p class="comment-text">{{objectquestion.body_aide}}</p>
                                 <div class="bottom-comment">
-                                  <div class="comment-date">{{objectquestion.date_created}}</div>
+
+                                  <div class="comment-date">{{objectquestion.date_created}}</div><br/>
+
+                                  <span   style="font-weight: bold;">{{objectquestion.expNom }}  </span>
+
+                               
                                 <!--    <ul class="comment-actions">
                                   <li class="complain">Complain</li>
                                     <li class="reply">Reply</li>
