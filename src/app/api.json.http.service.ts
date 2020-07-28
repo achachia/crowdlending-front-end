@@ -11,7 +11,11 @@ export class apiHttpJsonService {
 
   private apiUrlLocal = 'http://localhost:3000';
 
-  private apiUrlCloud = 'https://json-server-growdlending.herokuapp.com';  // https://json-server-growdlending.herokuapp.com
+  // https://json-server-growdlending.herokuapp.com 
+  
+  // https://json-server-growdlending.eu-gb.cf.appdomain.cloud/
+
+  private apiUrlCloud = 'https://json-server-growdlending.eu-gb.cf.appdomain.cloud';
 
   constructor(private http: HttpClient) { }
 
@@ -525,6 +529,40 @@ export class apiHttpJsonService {
 
    }
 
+   saveDataTransactionPaypal(objectFondInvestor){
 
+
+    const url = this.apiUrlCloud + '/log_investissements';
+
+    return this.http.post(url, objectFondInvestor);
+
+
+   }
+
+   saveCommentByInvestor(objectComment){
+
+    const url = this.apiUrlCloud + '/commentsProjects' ;
+
+    return this.http.post(url, objectComment);
+
+   }
+
+   getListCommentsForProject(idProject){
+
+    const url = this.apiUrlCloud + '/commentsProjects?idProject=' + idProject ;
+
+    return this.http.get(url);
+
+   }
+
+   updateStatutProject(objectProject){
+
+    const url = this.apiUrlCloud + '/projectsCompanyOwner/' + objectProject.id ;
+
+    return this.http.put(url, objectProject);
+
+
+
+   }
 
 }

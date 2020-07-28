@@ -403,6 +403,80 @@
 
             </ngb-tab>
 
+            <ngb-tab>
+
+              <ng-template ngbTabTitle>Les commentaires</ng-template>
+
+              <ng-template ngbTabContent>
+
+                  <div class="comments" style="margin-top:5%;margin-left:5%;">
+                      <div class="comment-wrap">
+                          <div class="photo">
+                              <!--  <div class="avatar"   style="background-image: url('{{infosUser.photoUser }}')"> </div>-->
+                             <div  class="avatar" > 
+
+                                      <img class="img-profile rounded-circle"  style="width:50px" [src]="infosUser.photoUser"  />
+
+                            </div>
+                          </div>
+                          <div class="comment-block">
+                              <form action="" #commentForm="ngForm"  (ngSubmit)="onFormSubmitComment()">
+
+                                  <textarea name="" id="" cols="60" rows="3"
+                                      placeholder="Rédiger votre commentaire..."
+                                      [(ngModel)]="ObjetComment.body_comment"
+                                      name="comment"></textarea>
+
+                                  <div class="form-group" style="margin-top:5%;">
+
+                                      <button type="submit" class="btn btn-primary"
+                                          [disabled]="!commentForm.form.valid">Envoyer</button>
+
+                                  </div>
+
+                                  <!-- <editor  apiKey="qagffr3pkuv17a8on1afax661irst1hbr4e6tbv888sz91jc"    class="mat-elevation-z1"     (onInit)="handleEditorInit($event)"   [init]="{  icons: 'material', skin: 'borderless', plugins: 'wordcount', menubar: false, min_height: 150  }"  ></editor>-->
+                              </form>
+                          </div>
+                      </div>
+
+                      <div class="comment-wrap"
+                          *ngFor="let objectComment of listCommentsForProject; let i = index ">
+                          
+                          
+                          <div class="photo">                                             
+
+                              <div  class="avatar" > 
+
+                                  <img class="img-profile rounded-circle"  style="width:50px" [src]="objectComment.userAvatar"  />
+        
+                                 </div>
+                           
+                          </div>
+                          <div class="comment-block">
+                              <p class="comment-text">{{objectComment.body_comment}}</p>
+                              <div class="bottom-comment">
+
+                                  <div class="comment-date">{{objectComment.date_created}}</div><br/>
+
+                                  <span   style="font-weight: bold;">{{objectComment.userNom }}  </span>
+                                  <!--    <ul class="comment-actions">
+                <li class="complain">Complain</li>
+                  <li class="reply">Reply</li>
+                </ul>-->
+                              </div>
+                          </div>
+                      </div>
+
+                  </div>
+
+
+
+
+
+              </ng-template>
+
+          </ngb-tab>
+
 
             </ngb-tabset>
 

@@ -38,7 +38,7 @@ constructor(private router: Router, private cookie: CookieService) {
       this.urlImageProfil = './assets/img/users/user_f.png';
     }
 
-    if (this.infosUser.sex === 'M') {
+    if (this.infosUser.sex === 'H') {
 
       this.infosUser.photoUser = './assets/img/users/user_m.png';
 

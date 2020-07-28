@@ -42,7 +42,7 @@ export class ProjectListInvestorComponent implements OnInit {
 
       }
 
-      if (this.infosUser.sex === 'M') {
+      if (this.infosUser.sex === 'H') {
 
         this.infosUser.photoUser = './assets/img/users/user_m.png';
 

@@ -42,7 +42,7 @@ constructor(private router: Router, private cookie: CookieService, private apiSe
 
            }
 
-         if (this.infosUser.sex === 'M') {
+         if (this.infosUser.sex === 'H') {
 
                this.infosUser.photoUser = './assets/img/users/user_m.png';
 
@@ -72,6 +72,8 @@ constructor(private router: Router, private cookie: CookieService, private apiSe
 
           this.listProjects = data;
 
+          this.calculNombredeJours();
+
           this.formaterListProject();
 
           this.ngxService.stop();
@@ -83,20 +85,108 @@ constructor(private router: Router, private cookie: CookieService, private apiSe
 
    }
 
-   calculNombredeJours(indexProject){
+   calculNombredeJours(){
 
      const date1 = new Date();
 
-     const date2 = new Date(this.listProjects[indexProject].date_limite_collecte);
+     // tslint:disable-next-line:prefer-for-of
+     for (let index = 0; index < this.listProjects.length; index++) {
+
+     const date2 = new Date(this.listProjects[index].date_limite_collecte);
 
      const diff = this.dateDiff(date1, date2);
 
-     this.listProjects[indexProject].nbrJoursRestant = 'moins de ' + diff.day + ' jours';
+     if (this.listProjects[index].statut_project === 1){
+
+        if (diff.day <= 0 ){
+
+          this.listProjects[index].statut_project = 2;
+
+          this.updateStatutProject(this.listProjects[index]);
+
+
+
+        }else{
+
+         this.listProjects[index].nbrJoursRestant = 'J-' + diff.day + ' jours';
+
+        }
+
+      }
+
+
+     }
+
+
 
       // tslint:disable-next-line:max-line-length
       //  console.log('Entre le ' + date1.toString() + ' et ' + date2.toString() + ' il y a ' + diff.day + ' jours, ' + diff.hour + ' heures, ' + diff.min + ' minutes et ' + diff.sec + ' secondes');
 
    }
+
+   formaterListProject() {
+
+    // tslint:disable-next-line:prefer-for-of
+    for (let index = 0; index < this.listProjects.length; index++) {
+
+
+      if (this.listProjects[index].statut_project === 0){
+
+
+       this.listProjects[index].statut_project = 'Attente';
+
+      }
+
+      if (this.listProjects[index].statut_project === 1){
+
+
+       this.listProjects[index].statut_project = 'Validé';
+
+      }
+
+      if (this.listProjects[index].statut_project === 2){
+
+
+       this.listProjects[index].statut_project = 'Terminé';
+
+      }
+
+      if (this.listProjects[index].statut_project === 3){
+
+
+       this.listProjects[index].statut_project = 'Annulé';
+
+      }
+
+
+      // tslint:disable-next-line:max-line-length
+      this.listProjects[index].date_limite_collecte = this.datePipe.transform(this.listProjects[index].date_limite_collecte, 'dd-MM-yyyy');
+
+
+    /********************************************************** */
+
+      this.getObjectCategorieProject(index);
+
+     /*********************************************************** */
+
+
+    }
+
+
+ }
+
+ updateStatutProject(objectProject){
+
+
+  this.apiService.updateStatutProject(objectProject).subscribe((data: any) => {
+
+    // console.log(data);
+
+    }, (error: any) => {
+
+   });
+
+ }
 
   dateDiff(date1, date2){
 
@@ -118,64 +208,7 @@ constructor(private router: Router, private cookie: CookieService, private apiSe
      return diff;
  }
 
- formaterListProject() {
 
-      // tslint:disable-next-line:prefer-for-of
-      for (let index = 0; index < this.listProjects.length; index++) {
-
-
-       /******************************************************************* */
-
-
-        if (this.listProjects[index].statut_project === 0){
-
-
-         this.listProjects[index].statut_project = 'Attente';
-
-        }
-
-        if (this.listProjects[index].statut_project === 1){
-
-
-         this.listProjects[index].statut_project = 'Validé';
-
-        }
-
-        if (this.listProjects[index].statut_project === 2){
-
-
-         this.listProjects[index].statut_project = 'Terminé';
-
-        }
-
-        if (this.listProjects[index].statut_project === 3){
-
-
-         this.listProjects[index].statut_project = 'Annulé';
-
-        }
-
-        /**************************************************************** */
-
-        this.calculNombredeJours(index);
-
-         /********************************************************** */
-
-        // tslint:disable-next-line:max-line-length
-        this.listProjects[index].date_limite_collecte = this.datePipe.transform(this.listProjects[index].date_limite_collecte, 'dd-MM-yyyy');
-
-
-      /********************************************************** */
-
-        this.getObjectCategorieProject(index);
-
-       /*********************************************************** */
-
-
-      }
-
-
-   }
 
   getObjectCategorieProject(indexProject){
 
@@ -192,7 +225,7 @@ constructor(private router: Router, private cookie: CookieService, private apiSe
 
   }
 
-  
+
 
   removeProject(indexProject){
 
@@ -226,7 +259,7 @@ constructor(private router: Router, private cookie: CookieService, private apiSe
       // tslint:disable-next-line:prefer-for-of
       for (let index = 0; index < data.length; index++) {
 
-         
+
 
 
       }

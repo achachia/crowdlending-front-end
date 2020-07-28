@@ -83,7 +83,7 @@ export class ProfilUserComponent implements OnInit {
           this.urlImageProfil = './assets/img/users/user_f.png';
         }
 
-        if (this.infosUser.sex === 'M') {
+        if (this.infosUser.sex === 'H') {
 
           this.infosUser.photoUser = './assets/img/users/user_m.png';
 
@@ -95,6 +95,8 @@ export class ProfilUserComponent implements OnInit {
         this.urlImageProfil = this.infosUser.photoUser;
 
       }
+
+      console.log('urlImageProfil', this.urlImageProfil);
 
       console.log('ProfilUserComponent', this.infosUser);
 

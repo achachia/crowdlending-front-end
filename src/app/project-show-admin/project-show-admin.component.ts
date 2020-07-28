@@ -114,6 +114,22 @@ export class ProjectShowAdminComponent implements OnInit {
 
    public polling: any;
 
+   public ObjetComment = {
+    body_comment: '',
+    userId: '',
+    userNom: '',
+    userAvatar: '',
+    typeCompte: 'investor',
+    date_created: '',
+    timestamp: 0,
+    idProject: ''
+
+  };
+
+  public listCommentsForProject = [];
+
+  public pollingComment: any;
+
   constructor(private route: ActivatedRoute, private router: Router, private cookie: CookieService, private apiService: apiHttpJsonService
             , private ngxService: NgxUiLoaderService, private datePipe: DatePipe, public sanitizer: DomSanitizer) {
 
@@ -163,7 +179,87 @@ export class ProjectShowAdminComponent implements OnInit {
 
   ngOnInit(): void { }
 
+  onFormSubmitComment() {
 
+    const date = new Date();
+
+    this.ObjetComment.date_created = date.toLocaleString('fr-FR', {
+      weekday: 'long',
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+      hour: 'numeric',
+      minute: 'numeric',
+      second: 'numeric',
+
+    });
+
+    this.ObjetComment.timestamp = Date.now();
+
+    this.ObjetComment.userId = this.infosUser.id;
+
+    this.ObjetComment.userAvatar = this.infosUser.photoUser;
+
+    this.ObjetComment.userNom = this.infosUser.nom + '.' + this.infosUser.prenom;
+
+    this.ObjetComment.idProject = this.ObjetProject.id;
+
+
+    this.apiService.saveCommentByInvestor(this.ObjetComment).subscribe((dataPorte: any) => {
+
+      // console.log(data);
+
+      this.getListCommentsProject();
+
+
+    }, (error: any) => {
+
+    });
+
+  }
+
+  getListCommentsProject() {
+
+    this.listCommentsForProject = [];
+
+    /*************************************************************************************** */
+
+    // recuperer la liste des questions envoye par l'investor (id-admin ='1' ) pour le compagny owner
+
+    // tslint:disable-next-line:max-line-length
+    this.apiService.getListCommentsForProject(this.ObjetProject.id).subscribe((dataComments: any) => {
+
+      console.log('dataComments', dataComments);
+
+      // tslint:disable-next-line:prefer-for-of
+      for (let index = 0; index < dataComments.length; index++) {
+
+        this.listCommentsForProject.push(dataComments[index]);
+
+
+      }
+
+      console.log('listCommentsForProject', this.listCommentsForProject);
+
+      this.listCommentsForProject = this.listCommentsForProject.sort((c1, c2) => c2.timestamp - c1.timestamp);
+
+
+    }, (error: any) => {
+
+    });
+   
+
+
+    this.listCommentsForProject = this.listCommentsForProject.sort((c1, c2) => c2.timestamp - c1.timestamp);
+
+
+
+    /************************************************************************************ */
+
+
+
+
+  }
 
  updateStatutProject(){
 
@@ -248,6 +344,15 @@ export class ProjectShowAdminComponent implements OnInit {
 
           this.getAllImageProject();
 
+          this.getListCommentsProject();
+
+          this.pollingComment = setInterval(() => {
+    
+            this.getListCommentsProject();
+    
+          }, 10 * 1000);
+    
+
           this.ngxService.stop();
 
 
@@ -277,7 +382,7 @@ export class ProjectShowAdminComponent implements OnInit {
 
           }
 
-        if (this.companyOwner.sex === 'M') {
+        if (this.companyOwner.sex === 'H') {
 
             this.companyOwner.photoUser = './assets/img/users/user_m.png';
 
